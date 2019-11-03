@@ -5,19 +5,29 @@ pub fn render_simple_html_page(html: Html) -> String {
 }
 
 trait TagRenderable {
-    fn get_name() -> String;
+    fn get_name() -> String
+    where
+        Self: Sized;
+    fn get_attributes(&self) -> Vec<&dyn Attribute>;
 }
 
-fn render_tag_element<T: TagRenderable>(_tag_element: T) -> String {
+fn render_tag_element<T: TagRenderable>(tag_element: T) -> String {
     let name = T::get_name();
-    format!("<{}></{}>", name, name)
+    let attrs = tag_element.get_attributes();
+    format!("<{}{}></{}>", name, render_attributes(attrs), name)
 }
 
-pub struct Html {}
+pub struct Html {
+    pub lang: Lang,
+}
 
 impl TagRenderable for Html {
     fn get_name() -> String {
         "html".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![&self.lang]
     }
 }
 
