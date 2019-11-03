@@ -211,6 +211,167 @@ impl GenericElement for P {
     fn is_generic_element_marker(&self) {}
 }
 
+pub struct Table {
+    pub thead: Option<Thead>,
+    pub tbody: Tbody,
+}
+
+impl TagRenderable for Table {
+    fn get_name(&self) -> String {
+        "table".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        match self.thead {
+            Some(ref v) => ret.push(Renderable::Tag(v)),
+            None => (),
+        }
+        ret.push(Renderable::Tag(&self.tbody));
+        ret
+    }
+}
+
+impl GenericElement for Table {
+    fn is_generic_element_marker(&self) {}
+}
+
+pub struct Thead {
+    pub trs: Vec<Thr>,
+}
+
+impl TagRenderable for Thead {
+    fn get_name(&self) -> String {
+        "thead".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.trs.iter() {
+            ret.push(Renderable::Tag(m));
+        }
+        ret
+    }
+}
+
+pub struct Thr {
+    pub ths: Vec<Th>,
+}
+
+impl TagRenderable for Thr {
+    fn get_name(&self) -> String {
+        "tr".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.ths.iter() {
+            ret.push(Renderable::Tag(m));
+        }
+        ret
+    }
+}
+
+pub struct Th {
+    pub children: Vec<Element>,
+}
+
+impl TagRenderable for Th {
+    fn get_name(&self) -> String {
+        "th".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
+    }
+}
+
+pub struct Tbody {
+    pub trs: Vec<Tr>,
+}
+
+impl TagRenderable for Tbody {
+    fn get_name(&self) -> String {
+        "tbody".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.trs.iter() {
+            ret.push(Renderable::Tag(m));
+        }
+        ret
+    }
+}
+
+pub struct Tr {
+    pub tds: Vec<Td>,
+}
+
+impl TagRenderable for Tr {
+    fn get_name(&self) -> String {
+        "tr".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.tds.iter() {
+            ret.push(Renderable::Tag(m));
+        }
+        ret
+    }
+}
+
+pub struct Td {
+    pub children: Vec<Element>,
+}
+
+impl TagRenderable for Td {
+    fn get_name(&self) -> String {
+        "td".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
+    }
+}
+
 pub trait Attribute {
     fn attr_key(&self) -> String;
     fn attr_value(&self) -> String;
