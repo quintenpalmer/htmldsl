@@ -185,6 +185,32 @@ impl GenericElement for H1 {
     fn is_generic_element_marker(&self) {}
 }
 
+pub struct P {
+    pub children: Vec<Element>,
+}
+
+impl TagRenderable for P {
+    fn get_name(&self) -> String {
+        "p".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
+    }
+}
+
+impl GenericElement for P {
+    fn is_generic_element_marker(&self) {}
+}
+
 pub trait Attribute {
     fn attr_key(&self) -> String;
     fn attr_value(&self) -> String;
