@@ -67,12 +67,11 @@ pub enum LanguageTag {
 
 impl fmt::Display for LanguageTag {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
+        write_to_formatter(
             f,
-            "{}",
             match self {
                 LanguageTag::En => "en",
-            }
+            },
         )
     }
 }
@@ -83,12 +82,15 @@ pub enum LanguageSubTag {
 
 impl fmt::Display for LanguageSubTag {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
+        write_to_formatter(
             f,
-            "{}",
             match self {
                 LanguageSubTag::Us => "US",
-            }
+            },
         )
     }
+}
+
+fn write_to_formatter(f: &mut fmt::Formatter<'_>, message: &'static str) -> fmt::Result {
+    write!(f, "{}", message)
 }
