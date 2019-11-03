@@ -15,6 +15,15 @@ pub enum Element {
     Text(String),
 }
 
+impl Element {
+    fn into_renderable(&self) -> Renderable {
+        match self {
+            Element::Tag(ref ge) => Renderable::Tag((**ge).as_tag_renderable()),
+            Element::Text(ref t) => Renderable::Text(t.clone()),
+        }
+    }
+}
+
 pub enum Renderable<'a> {
     Tag(&'a dyn TagRenderable),
     Text(String),
@@ -144,10 +153,7 @@ impl TagRenderable for Body {
     fn get_children(&self) -> Vec<Renderable> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
-            match m {
-                Element::Tag(ge) => ret.push(Renderable::Tag((**ge).as_tag_renderable())),
-                Element::Text(t) => ret.push(Renderable::Text(t.clone())),
-            };
+            ret.push(m.into_renderable());
         }
         ret
     }
