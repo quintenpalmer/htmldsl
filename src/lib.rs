@@ -7,15 +7,29 @@ pub fn render_simple_html_page(html: Html) -> String {
 trait TagRenderable {
     fn get_name(&self) -> String;
     fn get_attributes(&self) -> Vec<&dyn Attribute>;
+    fn get_children(&self) -> Vec<&dyn TagRenderable>;
 }
 
 fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
     let name = tag_element.get_name();
     let attrs = tag_element.get_attributes();
-    format!("<{}{}></{}>", name, render_attributes(attrs), name)
+    let rendered_children = tag_element
+        .get_children()
+        .into_iter()
+        .fold("".into(), |prev, curr| {
+            format!("{}{}", prev, render_tag_element(curr))
+        });
+    format!(
+        "<{}{}>{}</{}>",
+        name,
+        render_attributes(attrs),
+        rendered_children,
+        name
+    )
 }
 
 pub struct Html {
+    pub head: Option<Head>,
     pub lang: Lang,
 }
 
@@ -26,6 +40,29 @@ impl TagRenderable for Html {
 
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         vec![&self.lang]
+    }
+
+    fn get_children(&self) -> Vec<&dyn TagRenderable> {
+        match self.head {
+            Some(ref v) => vec![v],
+            None => Vec::new(),
+        }
+    }
+}
+
+pub struct Head {}
+
+impl TagRenderable for Head {
+    fn get_name(&self) -> String {
+        "head".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<&dyn TagRenderable> {
+        vec![]
     }
 }
 
