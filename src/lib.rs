@@ -10,6 +10,11 @@ pub trait TagRenderable {
     fn get_children(&self) -> Vec<Renderable>;
 }
 
+pub enum Element {
+    Tag(Box<dyn GenericElement>),
+    Text(String),
+}
+
 pub enum Renderable<'a> {
     Tag(&'a dyn TagRenderable),
     Text(String),
@@ -124,7 +129,7 @@ impl TagRenderable for Meta {
 }
 
 pub struct Body {
-    pub children: Vec<Box<dyn GenericElement>>,
+    pub children: Vec<Element>,
 }
 
 impl TagRenderable for Body {
@@ -139,7 +144,10 @@ impl TagRenderable for Body {
     fn get_children(&self) -> Vec<Renderable> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
-            ret.push(Renderable::Tag((**m).as_tag_renderable()));
+            match m {
+                Element::Tag(ge) => ret.push(Renderable::Tag((**ge).as_tag_renderable())),
+                Element::Text(t) => ret.push(Renderable::Text(t.clone())),
+            };
         }
         ret
     }
