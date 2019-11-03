@@ -4,10 +4,24 @@ pub fn render_simple_html_page(html: Html) -> String {
     format!("<!DOCTYPE html>{}", render_tag_element(&html))
 }
 
-trait TagRenderable {
+pub trait TagRenderable {
     fn get_name(&self) -> String;
     fn get_attributes(&self) -> Vec<&dyn Attribute>;
     fn get_children(&self) -> Vec<&dyn TagRenderable>;
+}
+
+pub trait GenericElement: AsTagRenderable + TagRenderable {
+    fn is_generic_element_marker(&self);
+}
+
+pub trait AsTagRenderable {
+    fn as_tag_renderable(&self) -> &dyn TagRenderable;
+}
+
+impl<T: GenericElement> AsTagRenderable for T {
+    fn as_tag_renderable(&self) -> &dyn TagRenderable {
+        self
+    }
 }
 
 fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
@@ -97,7 +111,9 @@ impl TagRenderable for Meta {
     }
 }
 
-pub struct Body {}
+pub struct Body {
+    pub children: Vec<Box<dyn GenericElement>>,
+}
 
 impl TagRenderable for Body {
     fn get_name(&self) -> String {
@@ -109,11 +125,35 @@ impl TagRenderable for Body {
     }
 
     fn get_children(&self) -> Vec<&dyn TagRenderable> {
+        let mut ret: Vec<&dyn TagRenderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push((**m).as_tag_renderable());
+        }
+        ret
+    }
+}
+
+pub struct H1 {}
+
+impl TagRenderable for H1 {
+    fn get_name(&self) -> String {
+        "h1".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<&dyn TagRenderable> {
         vec![]
     }
 }
 
-trait Attribute {
+impl GenericElement for H1 {
+    fn is_generic_element_marker(&self) {}
+}
+
+pub trait Attribute {
     fn attr_key(&self) -> String;
     fn attr_value(&self) -> String;
 }
