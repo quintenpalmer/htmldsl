@@ -159,7 +159,9 @@ impl TagRenderable for Body {
     }
 }
 
-pub struct H1 {}
+pub struct H1 {
+    pub children: Vec<Element>,
+}
 
 impl TagRenderable for H1 {
     fn get_name(&self) -> String {
@@ -171,7 +173,11 @@ impl TagRenderable for H1 {
     }
 
     fn get_children(&self) -> Vec<Renderable> {
-        vec![]
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
     }
 }
 
