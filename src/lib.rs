@@ -7,7 +7,21 @@ pub fn render_simple_html_page(html: Html) -> String {
 pub trait TagRenderable {
     fn get_name(&self) -> String;
     fn get_attributes(&self) -> Vec<&dyn Attribute>;
-    fn get_children(&self) -> Vec<&dyn TagRenderable>;
+    fn get_children(&self) -> Vec<Renderable>;
+}
+
+pub enum Renderable<'a> {
+    Tag(&'a dyn TagRenderable),
+    Text(String),
+}
+
+impl<'a> Renderable<'a> {
+    fn render(&self) -> String {
+        match self {
+            Renderable::Tag(ref tagged) => render_tag_element(&**tagged),
+            Renderable::Text(t) => t.clone(),
+        }
+    }
 }
 
 pub trait GenericElement: AsTagRenderable + TagRenderable {
@@ -30,9 +44,7 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
     let rendered_children = tag_element
         .get_children()
         .into_iter()
-        .fold("".into(), |prev, curr| {
-            format!("{}{}", prev, render_tag_element(curr))
-        });
+        .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render()));
     format!(
         "<{}{}>{}</{}>",
         name,
@@ -57,14 +69,14 @@ impl TagRenderable for Html {
         vec![&self.lang]
     }
 
-    fn get_children(&self) -> Vec<&dyn TagRenderable> {
-        let mut ret: Vec<&dyn TagRenderable> = Vec::new();
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
         match self.head {
-            Some(ref v) => ret.push(v),
+            Some(ref v) => ret.push(Renderable::Tag(v)),
             None => (),
         }
         match self.body {
-            Some(ref v) => ret.push(v),
+            Some(ref v) => ret.push(Renderable::Tag(v)),
             None => (),
         }
         ret
@@ -84,10 +96,10 @@ impl TagRenderable for Head {
         vec![]
     }
 
-    fn get_children(&self) -> Vec<&dyn TagRenderable> {
-        let mut ret: Vec<&dyn TagRenderable> = Vec::new();
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
         for m in self.metas.iter() {
-            ret.push(m);
+            ret.push(Renderable::Tag(m));
         }
         ret
     }
@@ -106,7 +118,7 @@ impl TagRenderable for Meta {
         self.charset.as_ref().map_or(Vec::new(), |v| vec![v])
     }
 
-    fn get_children(&self) -> Vec<&dyn TagRenderable> {
+    fn get_children(&self) -> Vec<Renderable> {
         vec![]
     }
 }
@@ -124,10 +136,10 @@ impl TagRenderable for Body {
         vec![]
     }
 
-    fn get_children(&self) -> Vec<&dyn TagRenderable> {
-        let mut ret: Vec<&dyn TagRenderable> = Vec::new();
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
-            ret.push((**m).as_tag_renderable());
+            ret.push(Renderable::Tag((**m).as_tag_renderable()));
         }
         ret
     }
@@ -144,7 +156,7 @@ impl TagRenderable for H1 {
         vec![]
     }
 
-    fn get_children(&self) -> Vec<&dyn TagRenderable> {
+    fn get_children(&self) -> Vec<Renderable> {
         vec![]
     }
 }
