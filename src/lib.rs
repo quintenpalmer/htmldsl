@@ -30,6 +30,7 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
 
 pub struct Html {
     pub head: Option<Head>,
+    pub body: Option<Body>,
     pub lang: Lang,
 }
 
@@ -43,10 +44,16 @@ impl TagRenderable for Html {
     }
 
     fn get_children(&self) -> Vec<&dyn TagRenderable> {
+        let mut ret: Vec<&dyn TagRenderable> = Vec::new();
         match self.head {
-            Some(ref v) => vec![v],
-            None => Vec::new(),
+            Some(ref v) => ret.push(v),
+            None => (),
         }
+        match self.body {
+            Some(ref v) => ret.push(v),
+            None => (),
+        }
+        ret
     }
 }
 
@@ -55,6 +62,22 @@ pub struct Head {}
 impl TagRenderable for Head {
     fn get_name(&self) -> String {
         "head".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<&dyn TagRenderable> {
+        vec![]
+    }
+}
+
+pub struct Body {}
+
+impl TagRenderable for Body {
+    fn get_name(&self) -> String {
+        "body".into()
     }
 
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
