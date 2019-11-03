@@ -57,7 +57,9 @@ impl TagRenderable for Html {
     }
 }
 
-pub struct Head {}
+pub struct Head {
+    pub metas: Vec<Meta>,
+}
 
 impl TagRenderable for Head {
     fn get_name(&self) -> String {
@@ -66,6 +68,28 @@ impl TagRenderable for Head {
 
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         vec![]
+    }
+
+    fn get_children(&self) -> Vec<&dyn TagRenderable> {
+        let mut ret: Vec<&dyn TagRenderable> = Vec::new();
+        for m in self.metas.iter() {
+            ret.push(m);
+        }
+        ret
+    }
+}
+
+pub struct Meta {
+    pub charset: Option<Charset>,
+}
+
+impl TagRenderable for Meta {
+    fn get_name(&self) -> String {
+        "meta".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        self.charset.as_ref().map_or(Vec::new(), |v| vec![v])
     }
 
     fn get_children(&self) -> Vec<&dyn TagRenderable> {
@@ -119,6 +143,20 @@ impl Attribute for Lang {
     }
 }
 
+pub struct Charset {
+    pub value: CharsetValue,
+}
+
+impl Attribute for Charset {
+    fn attr_key(&self) -> String {
+        "charset".into()
+    }
+
+    fn attr_value(&self) -> String {
+        format!("{}", self.value)
+    }
+}
+
 pub enum LanguageTag {
     En,
 }
@@ -144,6 +182,21 @@ impl fmt::Display for LanguageSubTag {
             f,
             match self {
                 LanguageSubTag::Us => "US",
+            },
+        )
+    }
+}
+
+pub enum CharsetValue {
+    Utf8,
+}
+
+impl fmt::Display for CharsetValue {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write_to_formatter(
+            f,
+            match self {
+                CharsetValue::Utf8 => "utf-8",
             },
         )
     }
