@@ -372,6 +372,58 @@ impl TagRenderable for Td {
     }
 }
 
+pub struct Code {
+    pub children: Vec<Element>,
+}
+
+impl TagRenderable for Code {
+    fn get_name(&self) -> String {
+        "code".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
+    }
+}
+
+impl GenericElement for Code {
+    fn is_generic_element_marker(&self) {}
+}
+
+pub struct Pre {
+    pub children: Vec<Element>,
+}
+
+impl TagRenderable for Pre {
+    fn get_name(&self) -> String {
+        "pre".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        vec![]
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
+    }
+}
+
+impl GenericElement for Pre {
+    fn is_generic_element_marker(&self) {}
+}
+
 pub trait Attribute {
     fn attr_key(&self) -> String;
     fn attr_value(&self) -> String;
