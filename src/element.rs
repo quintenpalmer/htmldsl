@@ -69,8 +69,8 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
 }
 
 pub struct Html<'a> {
-    pub head: Option<Head>,
-    pub body: Option<Body>,
+    pub head: Option<Head<'a>>,
+    pub body: Option<Body<'a>>,
     pub lang: attributes::Lang,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -102,11 +102,12 @@ impl<'a> TagRenderable for Html<'a> {
     }
 }
 
-pub struct Head {
-    pub metas: Vec<Meta>,
+pub struct Head<'a> {
+    pub metas: Vec<Meta<'a>>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Head {
+impl<'a> TagRenderable for Head<'a> {
     fn get_name(&self) -> String {
         "head".into()
     }
@@ -124,11 +125,12 @@ impl TagRenderable for Head {
     }
 }
 
-pub struct Meta {
+pub struct Meta<'a> {
     pub charset: Option<attributes::Charset>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Meta {
+impl<'a> TagRenderable for Meta<'a> {
     fn get_name(&self) -> String {
         "meta".into()
     }
@@ -142,11 +144,12 @@ impl TagRenderable for Meta {
     }
 }
 
-pub struct Body {
+pub struct Body<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Body {
+impl<'a> TagRenderable for Body<'a> {
     fn get_name(&self) -> String {
         "body".into()
     }
@@ -164,11 +167,12 @@ impl TagRenderable for Body {
     }
 }
 
-pub struct H1 {
+pub struct H1<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for H1 {
+impl<'a> TagRenderable for H1<'a> {
     fn get_name(&self) -> String {
         "h1".into()
     }
@@ -186,15 +190,16 @@ impl TagRenderable for H1 {
     }
 }
 
-impl GenericElement for H1 {
+impl<'a> GenericElement for H1<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
-pub struct P {
+pub struct P<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for P {
+impl<'a> TagRenderable for P<'a> {
     fn get_name(&self) -> String {
         "p".into()
     }
@@ -212,16 +217,17 @@ impl TagRenderable for P {
     }
 }
 
-impl GenericElement for P {
+impl<'a> GenericElement for P<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
-pub struct Table {
-    pub thead: Option<Thead>,
-    pub tbody: Tbody,
+pub struct Table<'a> {
+    pub thead: Option<Thead<'a>>,
+    pub tbody: Tbody<'a>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Table {
+impl<'a> TagRenderable for Table<'a> {
     fn get_name(&self) -> String {
         "table".into()
     }
@@ -241,15 +247,16 @@ impl TagRenderable for Table {
     }
 }
 
-impl GenericElement for Table {
+impl<'a> GenericElement for Table<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
-pub struct Thead {
-    pub trs: Vec<Thr>,
+pub struct Thead<'a> {
+    pub trs: Vec<Thr<'a>>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Thead {
+impl<'a> TagRenderable for Thead<'a> {
     fn get_name(&self) -> String {
         "thead".into()
     }
@@ -267,11 +274,12 @@ impl TagRenderable for Thead {
     }
 }
 
-pub struct Thr {
-    pub ths: Vec<Th>,
+pub struct Thr<'a> {
+    pub ths: Vec<Th<'a>>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Thr {
+impl<'a> TagRenderable for Thr<'a> {
     fn get_name(&self) -> String {
         "tr".into()
     }
@@ -289,11 +297,12 @@ impl TagRenderable for Thr {
     }
 }
 
-pub struct Th {
+pub struct Th<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Th {
+impl<'a> TagRenderable for Th<'a> {
     fn get_name(&self) -> String {
         "th".into()
     }
@@ -311,11 +320,12 @@ impl TagRenderable for Th {
     }
 }
 
-pub struct Tbody {
-    pub trs: Vec<Tr>,
+pub struct Tbody<'a> {
+    pub trs: Vec<Tr<'a>>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Tbody {
+impl<'a> TagRenderable for Tbody<'a> {
     fn get_name(&self) -> String {
         "tbody".into()
     }
@@ -333,11 +343,12 @@ impl TagRenderable for Tbody {
     }
 }
 
-pub struct Tr {
-    pub tds: Vec<Td>,
+pub struct Tr<'a> {
+    pub tds: Vec<Td<'a>>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Tr {
+impl<'a> TagRenderable for Tr<'a> {
     fn get_name(&self) -> String {
         "tr".into()
     }
@@ -355,11 +366,12 @@ impl TagRenderable for Tr {
     }
 }
 
-pub struct Td {
+pub struct Td<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Td {
+impl<'a> TagRenderable for Td<'a> {
     fn get_name(&self) -> String {
         "td".into()
     }
@@ -377,11 +389,12 @@ impl TagRenderable for Td {
     }
 }
 
-pub struct Code {
+pub struct Code<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Code {
+impl<'a> TagRenderable for Code<'a> {
     fn get_name(&self) -> String {
         "code".into()
     }
@@ -399,15 +412,16 @@ impl TagRenderable for Code {
     }
 }
 
-impl GenericElement for Code {
+impl<'a> GenericElement for Code<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
-pub struct Pre {
+pub struct Pre<'a> {
     pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Pre {
+impl<'a> TagRenderable for Pre<'a> {
     fn get_name(&self) -> String {
         "pre".into()
     }
@@ -425,6 +439,6 @@ impl TagRenderable for Pre {
     }
 }
 
-impl GenericElement for Pre {
+impl<'a> GenericElement for Pre<'a> {
     fn is_generic_element_marker(&self) {}
 }
