@@ -556,6 +556,20 @@ impl Style for Margin {
     }
 }
 
+pub struct MaxWidth {
+    pub value: u32,
+}
+
+impl Style for MaxWidth {
+    fn style_key(&self) -> String {
+        "max-width".into()
+    }
+
+    fn style_value(&self) -> String {
+        format!("{}cm", self.value)
+    }
+}
+
 fn write_to_formatter(f: &mut fmt::Formatter<'_>, message: &'static str) -> fmt::Result {
     write!(f, "{}", message)
 }
