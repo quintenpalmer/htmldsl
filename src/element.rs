@@ -1,4 +1,4 @@
-use std::fmt;
+use super::attributes;
 
 pub fn render_simple_html_page(html: Html) -> String {
     format!("<!DOCTYPE html>{}", render_tag_element(&html))
@@ -34,7 +34,7 @@ pub trait AsTagRenderable {
 
 pub trait TagRenderable {
     fn get_name(&self) -> String;
-    fn get_attributes(&self) -> Vec<&dyn Attribute>;
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute>;
     fn get_children(&self) -> Vec<Renderable>;
 }
 
@@ -62,7 +62,7 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
     format!(
         "<{}{}>{}</{}>",
         name,
-        render_attributes(attrs),
+        attributes::render_attributes(attrs),
         rendered_children,
         name
     )
@@ -71,8 +71,8 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
 pub struct Html<'a> {
     pub head: Option<Head>,
     pub body: Option<Body>,
-    pub lang: Lang,
-    pub styles: StyleAttr<'a>,
+    pub lang: attributes::Lang,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
 impl<'a> TagRenderable for Html<'a> {
@@ -80,8 +80,8 @@ impl<'a> TagRenderable for Html<'a> {
         "html".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
-        let mut ret: Vec<&dyn Attribute> = vec![&self.lang];
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+        let mut ret: Vec<&dyn attributes::Attribute> = vec![&self.lang];
         if self.styles.values.len() > 0 {
             ret.push(&self.styles);
         }
@@ -111,7 +111,7 @@ impl TagRenderable for Head {
         "head".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -125,7 +125,7 @@ impl TagRenderable for Head {
 }
 
 pub struct Meta {
-    pub charset: Option<Charset>,
+    pub charset: Option<attributes::Charset>,
 }
 
 impl TagRenderable for Meta {
@@ -133,7 +133,7 @@ impl TagRenderable for Meta {
         "meta".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         self.charset.as_ref().map_or(Vec::new(), |v| vec![v])
     }
 
@@ -151,7 +151,7 @@ impl TagRenderable for Body {
         "body".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -173,7 +173,7 @@ impl TagRenderable for H1 {
         "h1".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -199,7 +199,7 @@ impl TagRenderable for P {
         "p".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -226,7 +226,7 @@ impl TagRenderable for Table {
         "table".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -254,7 +254,7 @@ impl TagRenderable for Thead {
         "thead".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -276,7 +276,7 @@ impl TagRenderable for Thr {
         "tr".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -298,7 +298,7 @@ impl TagRenderable for Th {
         "th".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -320,7 +320,7 @@ impl TagRenderable for Tbody {
         "tbody".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -342,7 +342,7 @@ impl TagRenderable for Tr {
         "tr".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -364,7 +364,7 @@ impl TagRenderable for Td {
         "td".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -386,7 +386,7 @@ impl TagRenderable for Code {
         "code".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -412,7 +412,7 @@ impl TagRenderable for Pre {
         "pre".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
         vec![]
     }
 
@@ -427,149 +427,4 @@ impl TagRenderable for Pre {
 
 impl GenericElement for Pre {
     fn is_generic_element_marker(&self) {}
-}
-
-pub trait Attribute {
-    fn attr_key(&self) -> String;
-    fn attr_value(&self) -> String;
-}
-
-fn render_attribute(attribute: &dyn Attribute) -> String {
-    format!("{}={}", attribute.attr_key(), attribute.attr_value())
-}
-
-fn render_attributes(attributes: Vec<&dyn Attribute>) -> String {
-    attributes.into_iter().fold("".into(), |rendered, a| {
-        format!("{} {}", rendered, render_attribute(a))
-    })
-}
-
-pub struct StyleAttr<'a> {
-    pub values: Vec<&'a dyn Style>,
-}
-
-impl<'a> Attribute for StyleAttr<'a> {
-    fn attr_key(&self) -> String {
-        "style".into()
-    }
-
-    fn attr_value(&self) -> String {
-        format!(
-            "\"{}\"",
-            self.values.iter().fold("".into(), |rendered, a| {
-                format!("{}; {}: {};", rendered, a.style_key(), a.style_value())
-            })
-        )
-    }
-}
-
-pub struct Lang {
-    pub tag: LanguageTag,
-    pub sub_tag: LanguageSubTag,
-}
-
-impl Attribute for Lang {
-    fn attr_key(&self) -> String {
-        "lanq".into()
-    }
-
-    fn attr_value(&self) -> String {
-        format!("{}-{}", self.tag, self.sub_tag)
-    }
-}
-
-pub struct Charset {
-    pub value: CharsetValue,
-}
-
-impl Attribute for Charset {
-    fn attr_key(&self) -> String {
-        "charset".into()
-    }
-
-    fn attr_value(&self) -> String {
-        format!("{}", self.value)
-    }
-}
-
-pub enum LanguageTag {
-    En,
-}
-
-impl fmt::Display for LanguageTag {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_to_formatter(
-            f,
-            match self {
-                LanguageTag::En => "en",
-            },
-        )
-    }
-}
-
-pub enum LanguageSubTag {
-    Us,
-}
-
-impl fmt::Display for LanguageSubTag {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_to_formatter(
-            f,
-            match self {
-                LanguageSubTag::Us => "US",
-            },
-        )
-    }
-}
-
-pub enum CharsetValue {
-    Utf8,
-}
-
-impl fmt::Display for CharsetValue {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_to_formatter(
-            f,
-            match self {
-                CharsetValue::Utf8 => "utf-8",
-            },
-        )
-    }
-}
-
-pub trait Style {
-    fn style_key(&self) -> String;
-    fn style_value(&self) -> String;
-}
-
-pub struct Margin {
-    pub value: u32,
-}
-
-impl Style for Margin {
-    fn style_key(&self) -> String {
-        "margin".into()
-    }
-
-    fn style_value(&self) -> String {
-        format!("{} auto", self.value)
-    }
-}
-
-pub struct MaxWidth {
-    pub value: u32,
-}
-
-impl Style for MaxWidth {
-    fn style_key(&self) -> String {
-        "max-width".into()
-    }
-
-    fn style_value(&self) -> String {
-        format!("{}cm", self.value)
-    }
-}
-
-fn write_to_formatter(f: &mut fmt::Formatter<'_>, message: &'static str) -> fmt::Result {
-    write!(f, "{}", message)
 }
