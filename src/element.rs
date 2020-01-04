@@ -68,6 +68,16 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
     )
 }
 
+fn full_attrs<'a>(
+    mut attrs: Vec<&'a dyn attributes::Attribute>,
+    styles: &'a attributes::StyleAttr<'a>,
+) -> Vec<&'a dyn attributes::Attribute> {
+    if styles.values.len() > 0 {
+        attrs.push(styles);
+    }
+    attrs
+}
+
 pub struct Html<'a> {
     pub head: Option<Head<'a>>,
     pub body: Option<Body<'a>>,
@@ -81,11 +91,7 @@ impl<'a> TagRenderable for Html<'a> {
     }
 
     fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
-        let mut ret: Vec<&dyn attributes::Attribute> = vec![&self.lang];
-        if self.styles.values.len() > 0 {
-            ret.push(&self.styles);
-        }
-        ret
+        full_attrs(vec![&self.lang], &self.styles)
     }
 
     fn get_children(&self) -> Vec<Renderable> {
