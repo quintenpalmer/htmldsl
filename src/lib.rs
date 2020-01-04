@@ -68,19 +68,24 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
     )
 }
 
-pub struct Html {
+pub struct Html<'a> {
     pub head: Option<Head>,
     pub body: Option<Body>,
     pub lang: Lang,
+    pub styles: StyleAttr<'a>,
 }
 
-impl TagRenderable for Html {
+impl<'a> TagRenderable for Html<'a> {
     fn get_name(&self) -> String {
         "html".into()
     }
 
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
-        vec![&self.lang]
+        let mut ret: Vec<&dyn Attribute> = vec![&self.lang];
+        if self.styles.values.len() > 0 {
+            ret.push(&self.styles);
+        }
+        ret
     }
 
     fn get_children(&self) -> Vec<Renderable> {
@@ -439,6 +444,25 @@ fn render_attributes(attributes: Vec<&dyn Attribute>) -> String {
     })
 }
 
+pub struct StyleAttr<'a> {
+    pub values: Vec<&'a dyn Style>,
+}
+
+impl<'a> Attribute for StyleAttr<'a> {
+    fn attr_key(&self) -> String {
+        "style".into()
+    }
+
+    fn attr_value(&self) -> String {
+        format!(
+            "\"{}\"",
+            self.values.iter().fold("".into(), |rendered, a| {
+                format!("{}; {}: {};", rendered, a.style_key(), a.style_value())
+            })
+        )
+    }
+}
+
 pub struct Lang {
     pub tag: LanguageTag,
     pub sub_tag: LanguageSubTag,
@@ -510,6 +534,25 @@ impl fmt::Display for CharsetValue {
                 CharsetValue::Utf8 => "utf-8",
             },
         )
+    }
+}
+
+pub trait Style {
+    fn style_key(&self) -> String;
+    fn style_value(&self) -> String;
+}
+
+pub struct Margin {
+    pub value: u32,
+}
+
+impl Style for Margin {
+    fn style_key(&self) -> String {
+        "margin".into()
+    }
+
+    fn style_value(&self) -> String {
+        format!("{} auto", self.value)
     }
 }
 
