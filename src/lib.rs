@@ -4,12 +4,6 @@ pub fn render_simple_html_page(html: Html) -> String {
     format!("<!DOCTYPE html>{}", render_tag_element(&html))
 }
 
-pub trait TagRenderable {
-    fn get_name(&self) -> String;
-    fn get_attributes(&self) -> Vec<&dyn Attribute>;
-    fn get_children(&self) -> Vec<Renderable>;
-}
-
 pub enum Element {
     Tag(Box<dyn GenericElement>),
     Text(String),
@@ -24,6 +18,26 @@ impl Element {
     }
 }
 
+pub trait GenericElement: AsTagRenderable + TagRenderable {
+    fn is_generic_element_marker(&self);
+}
+
+impl<T: GenericElement> AsTagRenderable for T {
+    fn as_tag_renderable(&self) -> &dyn TagRenderable {
+        self
+    }
+}
+
+pub trait AsTagRenderable {
+    fn as_tag_renderable(&self) -> &dyn TagRenderable;
+}
+
+pub trait TagRenderable {
+    fn get_name(&self) -> String;
+    fn get_attributes(&self) -> Vec<&dyn Attribute>;
+    fn get_children(&self) -> Vec<Renderable>;
+}
+
 pub enum Renderable<'a> {
     Tag(&'a dyn TagRenderable),
     Text(String),
@@ -35,20 +49,6 @@ impl<'a> Renderable<'a> {
             Renderable::Tag(ref tagged) => render_tag_element(&**tagged),
             Renderable::Text(t) => t.clone(),
         }
-    }
-}
-
-pub trait GenericElement: AsTagRenderable + TagRenderable {
-    fn is_generic_element_marker(&self);
-}
-
-pub trait AsTagRenderable {
-    fn as_tag_renderable(&self) -> &dyn TagRenderable;
-}
-
-impl<T: GenericElement> AsTagRenderable for T {
-    fn as_tag_renderable(&self) -> &dyn TagRenderable {
-        self
     }
 }
 
