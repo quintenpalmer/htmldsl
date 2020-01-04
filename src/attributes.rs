@@ -1,3 +1,4 @@
+use super::styles;
 use std::fmt;
 
 pub trait Attribute {
@@ -16,7 +17,7 @@ pub fn render_attributes(attributes: Vec<&dyn Attribute>) -> String {
 }
 
 pub struct StyleAttr<'a> {
-    pub values: Vec<&'a dyn Style>,
+    pub values: Vec<&'a dyn styles::Style>,
 }
 
 impl<'a> Attribute for StyleAttr<'a> {
@@ -105,39 +106,6 @@ impl fmt::Display for CharsetValue {
                 CharsetValue::Utf8 => "utf-8",
             },
         )
-    }
-}
-
-pub trait Style {
-    fn style_key(&self) -> String;
-    fn style_value(&self) -> String;
-}
-
-pub struct Margin {
-    pub value: u32,
-}
-
-impl Style for Margin {
-    fn style_key(&self) -> String {
-        "margin".into()
-    }
-
-    fn style_value(&self) -> String {
-        format!("{} auto", self.value)
-    }
-}
-
-pub struct MaxWidth {
-    pub value: u32,
-}
-
-impl Style for MaxWidth {
-    fn style_key(&self) -> String {
-        "max-width".into()
-    }
-
-    fn style_value(&self) -> String {
-        format!("{}cm", self.value)
     }
 }
 

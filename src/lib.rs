@@ -1,5 +1,6 @@
 mod attributes;
 mod element;
+mod styles;
 
 pub use attributes::Attribute;
 pub use attributes::Charset;
@@ -7,9 +8,6 @@ pub use attributes::CharsetValue;
 pub use attributes::Lang;
 pub use attributes::LanguageSubTag;
 pub use attributes::LanguageTag;
-pub use attributes::Margin;
-pub use attributes::MaxWidth;
-pub use attributes::Style;
 pub use attributes::StyleAttr;
 pub use element::render_simple_html_page;
 pub use element::AsTagRenderable;
@@ -32,3 +30,6 @@ pub use element::Thr;
 pub use element::Tr;
 pub use element::H1;
 pub use element::P;
+pub use styles::Margin;
+pub use styles::MaxWidth;
+pub use styles::Style;
