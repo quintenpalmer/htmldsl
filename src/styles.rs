@@ -30,3 +30,17 @@ impl Style for MaxWidth {
         format!("{}cm", self.value)
     }
 }
+
+pub struct BackgroundColor {
+    pub color_value: String,
+}
+
+impl Style for BackgroundColor {
+    fn style_key(&self) -> String {
+        "background-color".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.color_value.clone()
+    }
+}

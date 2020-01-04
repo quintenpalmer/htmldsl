@@ -30,6 +30,7 @@ pub use element::Thr;
 pub use element::Tr;
 pub use element::H1;
 pub use element::P;
+pub use styles::BackgroundColor;
 pub use styles::Margin;
 pub use styles::MaxWidth;
 pub use styles::Style;
