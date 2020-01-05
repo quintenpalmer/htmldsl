@@ -11,6 +11,7 @@ pub use element::render_simple_html_page;
 pub use element::AsTagRenderable;
 pub use element::Body;
 pub use element::Code;
+pub use element::Div;
 pub use element::Element;
 pub use element::GenericElement;
 pub use element::Head;

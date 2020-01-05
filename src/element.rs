@@ -176,6 +176,33 @@ impl<'a> TagRenderable for Body<'a> {
     }
 }
 
+pub struct Div<'a> {
+    pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> TagRenderable for Div<'a> {
+    fn get_name(&self) -> String {
+        "div".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+        full_attrs(vec![], &self.styles)
+    }
+
+    fn get_children(&self) -> Vec<Renderable> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        ret
+    }
+}
+
+impl<'a> GenericElement for Div<'a> {
+    fn is_generic_element_marker(&self) {}
+}
+
 pub struct H1<'a> {
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
