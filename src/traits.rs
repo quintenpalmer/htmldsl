@@ -43,26 +43,24 @@ pub mod element_traits {
     impl<'a> Renderable<'a> {
         pub fn render(&self) -> String {
             match self {
-                Renderable::Tag(ref tagged) => render_tag_element(&**tagged),
+                Renderable::Tag(ref tag_element) => {
+                    let name = tag_element.get_name();
+                    let attrs = tag_element.get_attributes();
+                    let rendered_children = tag_element
+                        .get_children()
+                        .into_iter()
+                        .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render()));
+                    format!(
+                        "<{}{}>{}</{}>",
+                        name,
+                        attr_traits::render_attributes(attrs),
+                        rendered_children,
+                        name
+                    )
+                }
                 Renderable::Text(t) => t.clone(),
             }
         }
-    }
-
-    fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
-        let name = tag_element.get_name();
-        let attrs = tag_element.get_attributes();
-        let rendered_children = tag_element
-            .get_children()
-            .into_iter()
-            .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render()));
-        format!(
-            "<{}{}>{}</{}>",
-            name,
-            attr_traits::render_attributes(attrs),
-            rendered_children,
-            name
-        )
     }
 }
 
