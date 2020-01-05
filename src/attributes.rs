@@ -1,4 +1,5 @@
 use super::styles;
+use super::units;
 
 pub trait Attribute {
     fn attr_key(&self) -> String;
@@ -35,8 +36,8 @@ impl<'a> Attribute for StyleAttr<'a> {
 }
 
 pub struct Lang {
-    pub tag: LanguageTag,
-    pub sub_tag: LanguageSubTag,
+    pub tag: units::LanguageTag,
+    pub sub_tag: units::LanguageSubTag,
 }
 
 impl Attribute for Lang {
@@ -50,7 +51,7 @@ impl Attribute for Lang {
 }
 
 pub struct Charset {
-    pub value: CharsetValue,
+    pub value: units::CharsetValue,
 }
 
 impl Attribute for Charset {
@@ -60,41 +61,5 @@ impl Attribute for Charset {
 
     fn attr_value(&self) -> String {
         self.value.char_set_str()
-    }
-}
-
-pub enum LanguageTag {
-    En,
-}
-
-impl LanguageTag {
-    fn lang_tag_str(&self) -> String {
-        match self {
-            LanguageTag::En => "en".into(),
-        }
-    }
-}
-
-pub enum LanguageSubTag {
-    Us,
-}
-
-impl LanguageSubTag {
-    fn sub_tag_str(&self) -> String {
-        match self {
-            LanguageSubTag::Us => "US".into(),
-        }
-    }
-}
-
-pub enum CharsetValue {
-    Utf8,
-}
-
-impl CharsetValue {
-    fn char_set_str(&self) -> String {
-        match self {
-            CharsetValue::Utf8 => "utf-8".into(),
-        }
     }
 }

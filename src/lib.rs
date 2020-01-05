@@ -1,13 +1,11 @@
 mod attributes;
 mod element;
 mod styles;
+mod units;
 
 pub use attributes::Attribute;
 pub use attributes::Charset;
-pub use attributes::CharsetValue;
 pub use attributes::Lang;
-pub use attributes::LanguageSubTag;
-pub use attributes::LanguageTag;
 pub use attributes::StyleAttr;
 pub use element::render_simple_html_page;
 pub use element::AsTagRenderable;
@@ -34,3 +32,6 @@ pub use styles::BackgroundColor;
 pub use styles::Margin;
 pub use styles::MaxWidth;
 pub use styles::Style;
+pub use units::CharsetValue;
+pub use units::LanguageSubTag;
+pub use units::LanguageTag;
