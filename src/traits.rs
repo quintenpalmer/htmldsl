@@ -1,6 +1,5 @@
 pub mod element_traits {
     use super::attr_traits;
-    use crate::attributes;
 
     pub enum Element {
         Tag(Box<dyn GenericElement>),
@@ -64,16 +63,6 @@ pub mod element_traits {
             rendered_children,
             name
         )
-    }
-
-    pub fn full_attrs<'a>(
-        mut attrs: Vec<&'a dyn attr_traits::Attribute>,
-        styles: &'a attributes::StyleAttr<'a>,
-    ) -> Vec<&'a dyn attr_traits::Attribute> {
-        if styles.values.len() > 0 {
-            attrs.push(styles);
-        }
-        attrs
     }
 }
 
