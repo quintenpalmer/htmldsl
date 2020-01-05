@@ -5,39 +5,20 @@ pub trait Style {
     fn style_value(&self) -> String;
 }
 
-pub enum Number {
-    Length(u32, units::Length),
-    Percentage(u32),
-}
-
-impl Number {
-    fn style_value_helper(&self) -> String {
-        match self {
-            Number::Length(v, l) => format!("{}{}", v, l.unit_str()),
-            Number::Percentage(v) => format!("{}{}", v, units::Percentage {}.unit_str()),
-        }
-    }
-}
-
-pub enum NumberOrAuto {
-    Number(Number),
-    Auto,
-}
-
-impl NumberOrAuto {
-    fn style_value_helper(&self) -> String {
-        match self {
-            NumberOrAuto::Number(n) => n.style_value_helper(),
-            NumberOrAuto::Auto => units::Auto {}.unit_str(),
-        }
-    }
-}
-
 pub enum Margin {
-    AllFour(NumberOrAuto),
-    VerticalHorizontal(NumberOrAuto, NumberOrAuto),
-    TopHorizontalBotton(NumberOrAuto, NumberOrAuto, NumberOrAuto),
-    TopRightBottonLeft(NumberOrAuto, NumberOrAuto, NumberOrAuto, NumberOrAuto),
+    AllFour(units::NumberOrAuto),
+    VerticalHorizontal(units::NumberOrAuto, units::NumberOrAuto),
+    TopHorizontalBotton(
+        units::NumberOrAuto,
+        units::NumberOrAuto,
+        units::NumberOrAuto,
+    ),
+    TopRightBottonLeft(
+        units::NumberOrAuto,
+        units::NumberOrAuto,
+        units::NumberOrAuto,
+        units::NumberOrAuto,
+    ),
 }
 
 impl Style for Margin {
@@ -69,10 +50,10 @@ impl Style for Margin {
 }
 
 pub enum Padding {
-    AllFour(Number),
-    VerticalHorizontal(Number, Number),
-    TopHorizontalBotton(Number, Number, Number),
-    TopRightBottonLeft(Number, Number, Number, Number),
+    AllFour(units::Number),
+    VerticalHorizontal(units::Number, units::Number),
+    TopHorizontalBotton(units::Number, units::Number, units::Number),
+    TopRightBottonLeft(units::Number, units::Number, units::Number, units::Number),
 }
 
 impl Style for Padding {
@@ -146,7 +127,7 @@ impl Style for BackgroundColor {
 }
 
 pub struct Height {
-    pub value: NumberOrAuto,
+    pub value: units::NumberOrAuto,
 }
 
 impl Style for Height {

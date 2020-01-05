@@ -77,3 +77,31 @@ impl BorderStyle {
         }
     }
 }
+
+pub enum Number {
+    Length(u32, Length),
+    Percentage(u32),
+}
+
+impl Number {
+    pub fn style_value_helper(&self) -> String {
+        match self {
+            Number::Length(v, l) => format!("{}{}", v, l.unit_str()),
+            Number::Percentage(v) => format!("{}{}", v, Percentage {}.unit_str()),
+        }
+    }
+}
+
+pub enum NumberOrAuto {
+    Number(Number),
+    Auto,
+}
+
+impl NumberOrAuto {
+    pub fn style_value_helper(&self) -> String {
+        match self {
+            NumberOrAuto::Number(n) => n.style_value_helper(),
+            NumberOrAuto::Auto => Auto {}.unit_str(),
+        }
+    }
+}
