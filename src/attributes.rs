@@ -1,5 +1,4 @@
 use super::styles;
-use std::fmt;
 
 pub trait Attribute {
     fn attr_key(&self) -> String;
@@ -46,7 +45,7 @@ impl Attribute for Lang {
     }
 
     fn attr_value(&self) -> String {
-        format!("{}-{}", self.tag, self.sub_tag)
+        format!("{}-{}", self.tag.lang_tag_str(), self.sub_tag.sub_tag_str())
     }
 }
 
@@ -60,7 +59,7 @@ impl Attribute for Charset {
     }
 
     fn attr_value(&self) -> String {
-        format!("{}", self.value)
+        self.value.char_set_str()
     }
 }
 
@@ -68,14 +67,11 @@ pub enum LanguageTag {
     En,
 }
 
-impl fmt::Display for LanguageTag {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_to_formatter(
-            f,
-            match self {
-                LanguageTag::En => "en",
-            },
-        )
+impl LanguageTag {
+    fn lang_tag_str(&self) -> String {
+        match self {
+            LanguageTag::En => "en".into(),
+        }
     }
 }
 
@@ -83,14 +79,11 @@ pub enum LanguageSubTag {
     Us,
 }
 
-impl fmt::Display for LanguageSubTag {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_to_formatter(
-            f,
-            match self {
-                LanguageSubTag::Us => "US",
-            },
-        )
+impl LanguageSubTag {
+    fn sub_tag_str(&self) -> String {
+        match self {
+            LanguageSubTag::Us => "US".into(),
+        }
     }
 }
 
@@ -98,17 +91,10 @@ pub enum CharsetValue {
     Utf8,
 }
 
-impl fmt::Display for CharsetValue {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_to_formatter(
-            f,
-            match self {
-                CharsetValue::Utf8 => "utf-8",
-            },
-        )
+impl CharsetValue {
+    fn char_set_str(&self) -> String {
+        match self {
+            CharsetValue::Utf8 => "utf-8".into(),
+        }
     }
-}
-
-fn write_to_formatter(f: &mut fmt::Formatter<'_>, message: &'static str) -> fmt::Result {
-    write!(f, "{}", message)
 }
