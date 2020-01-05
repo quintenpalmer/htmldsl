@@ -10,6 +10,15 @@ pub enum Number {
     Percentage(u32),
 }
 
+impl Number {
+    fn style_value_helper(&self) -> String {
+        match self {
+            Number::Length(v, l) => format!("{}{}", v, l.unit_str()),
+            Number::Percentage(v) => format!("{}{}", v, units::Percentage {}.unit_str()),
+        }
+    }
+}
+
 pub enum NumberOrAuto {
     Number(Number),
     Auto,
@@ -18,10 +27,7 @@ pub enum NumberOrAuto {
 impl NumberOrAuto {
     fn style_value_helper(&self) -> String {
         match self {
-            NumberOrAuto::Number(Number::Length(v, l)) => format!("{}{}", v, l.unit_str()),
-            NumberOrAuto::Number(Number::Percentage(v)) => {
-                format!("{}{}", v, units::Percentage {}.unit_str())
-            }
+            NumberOrAuto::Number(n) => n.style_value_helper(),
             NumberOrAuto::Auto => units::Auto {}.unit_str(),
         }
     }
@@ -52,6 +58,41 @@ impl Style for Margin {
                 b.style_value_helper()
             ),
             Margin::TopRightBottonLeft(t, r, b, l) => format!(
+                "{} {} {} {}",
+                t.style_value_helper(),
+                r.style_value_helper(),
+                b.style_value_helper(),
+                l.style_value_helper()
+            ),
+        }
+    }
+}
+
+pub enum Padding {
+    AllFour(Number),
+    VerticalHorizontal(Number, Number),
+    TopHorizontalBotton(Number, Number, Number),
+    TopRightBottonLeft(Number, Number, Number, Number),
+}
+
+impl Style for Padding {
+    fn style_key(&self) -> String {
+        "padding".into()
+    }
+
+    fn style_value(&self) -> String {
+        match self {
+            Padding::AllFour(v) => v.style_value_helper(),
+            Padding::VerticalHorizontal(v, h) => {
+                format!("{} {}", v.style_value_helper(), h.style_value_helper())
+            }
+            Padding::TopHorizontalBotton(t, h, b) => format!(
+                "{} {} {}",
+                t.style_value_helper(),
+                h.style_value_helper(),
+                b.style_value_helper()
+            ),
+            Padding::TopRightBottonLeft(t, r, b, l) => format!(
                 "{} {} {} {}",
                 t.style_value_helper(),
                 r.style_value_helper(),

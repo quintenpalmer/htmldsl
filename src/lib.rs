@@ -35,6 +35,7 @@ pub use styles::Margin;
 pub use styles::MaxWidth;
 pub use styles::Number;
 pub use styles::NumberOrAuto;
+pub use styles::Padding;
 pub use styles::Style;
 pub use units::Auto;
 pub use units::CharsetValue;
