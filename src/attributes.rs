@@ -1,23 +1,9 @@
-use super::styles;
+use super::traits::attr_traits::Attribute;
+use super::traits::style_traits;
 use super::units;
 
-pub trait Attribute {
-    fn attr_key(&self) -> String;
-    fn attr_value(&self) -> String;
-}
-
-fn render_attribute(attribute: &dyn Attribute) -> String {
-    format!("{}={}", attribute.attr_key(), attribute.attr_value())
-}
-
-pub fn render_attributes(attributes: Vec<&dyn Attribute>) -> String {
-    attributes.into_iter().fold("".into(), |rendered, a| {
-        format!("{} {}", rendered, render_attribute(a))
-    })
-}
-
 pub struct StyleAttr<'a> {
-    pub values: Vec<&'a dyn styles::Style>,
+    pub values: Vec<&'a dyn style_traits::Style>,
 }
 
 impl<'a> Attribute for StyleAttr<'a> {

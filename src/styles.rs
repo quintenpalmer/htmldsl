@@ -1,9 +1,5 @@
+use super::traits::style_traits::Style;
 use super::units;
-
-pub trait Style {
-    fn style_key(&self) -> String;
-    fn style_value(&self) -> String;
-}
 
 pub enum Margin {
     AllFour(units::NumberOrAuto),

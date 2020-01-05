@@ -1,82 +1,8 @@
-use super::attributes::{self, Attribute};
-
-pub fn render_simple_html_page(html: Html) -> String {
-    format!("<!DOCTYPE html>{}", render_tag_element(&html))
-}
-
-pub enum Element {
-    Tag(Box<dyn GenericElement>),
-    Text(String),
-}
-
-impl Element {
-    fn into_renderable(&self) -> Renderable {
-        match self {
-            Element::Tag(ref ge) => Renderable::Tag((**ge).as_tag_renderable()),
-            Element::Text(ref t) => Renderable::Text(t.clone()),
-        }
-    }
-}
-
-pub trait GenericElement: AsTagRenderable + TagRenderable {
-    fn is_generic_element_marker(&self);
-}
-
-impl<T: GenericElement> AsTagRenderable for T {
-    fn as_tag_renderable(&self) -> &dyn TagRenderable {
-        self
-    }
-}
-
-pub trait AsTagRenderable {
-    fn as_tag_renderable(&self) -> &dyn TagRenderable;
-}
-
-pub trait TagRenderable {
-    fn get_name(&self) -> String;
-    fn get_attributes(&self) -> Vec<&dyn Attribute>;
-    fn get_children(&self) -> Vec<Renderable>;
-}
-
-pub enum Renderable<'a> {
-    Tag(&'a dyn TagRenderable),
-    Text(String),
-}
-
-impl<'a> Renderable<'a> {
-    fn render(&self) -> String {
-        match self {
-            Renderable::Tag(ref tagged) => render_tag_element(&**tagged),
-            Renderable::Text(t) => t.clone(),
-        }
-    }
-}
-
-fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
-    let name = tag_element.get_name();
-    let attrs = tag_element.get_attributes();
-    let rendered_children = tag_element
-        .get_children()
-        .into_iter()
-        .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render()));
-    format!(
-        "<{}{}>{}</{}>",
-        name,
-        attributes::render_attributes(attrs),
-        rendered_children,
-        name
-    )
-}
-
-fn full_attrs<'a>(
-    mut attrs: Vec<&'a dyn Attribute>,
-    styles: &'a attributes::StyleAttr<'a>,
-) -> Vec<&'a dyn Attribute> {
-    if styles.values.len() > 0 {
-        attrs.push(styles);
-    }
-    attrs
-}
+use super::attributes;
+use super::traits::attr_traits::Attribute;
+use super::traits::element_traits::{
+    full_attrs, Element, GenericElement, Renderable, TagRenderable,
+};
 
 pub struct Html<'a> {
     pub head: Option<Head<'a>>,
