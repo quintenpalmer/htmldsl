@@ -65,3 +65,15 @@ impl Auto {
         "auto".into()
     }
 }
+
+pub enum BorderStyle {
+    Solid,
+}
+
+impl BorderStyle {
+    pub fn unit_str(&self) -> String {
+        match self {
+            BorderStyle::Solid => "solid".into(),
+        }
+    }
+}

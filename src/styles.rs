@@ -103,6 +103,20 @@ impl Style for Padding {
     }
 }
 
+pub struct Border {
+    pub style: units::BorderStyle,
+}
+
+impl Style for Border {
+    fn style_key(&self) -> String {
+        "border".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.style.unit_str()
+    }
+}
+
 pub struct MaxWidth {
     pub value: u32,
 }
