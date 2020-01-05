@@ -5,6 +5,22 @@ pub trait Style {
     fn style_value(&self) -> String;
 }
 
+pub enum NumberLikeValue {
+    Length(u32, units::Length),
+    Percentage(u32, units::Percentage),
+    Auto(units::Auto),
+}
+
+impl NumberLikeValue {
+    fn style_value_helper(&self) -> String {
+        match self {
+            NumberLikeValue::Length(v, l) => format!("{}{}", v, l.unit_str()),
+            NumberLikeValue::Percentage(v, p) => format!("{}{}", v, p.unit_str()),
+            NumberLikeValue::Auto(a) => a.unit_str(),
+        }
+    }
+}
+
 pub struct Margin {
     pub value: u32,
 }
@@ -47,10 +63,8 @@ impl Style for BackgroundColor {
     }
 }
 
-pub enum Height {
-    Length(u32, units::Length),
-    Percentage(u32, units::Percentage),
-    Auto(units::Auto),
+pub struct Height {
+    pub value: NumberLikeValue,
 }
 
 impl Style for Height {
@@ -59,10 +73,6 @@ impl Style for Height {
     }
 
     fn style_value(&self) -> String {
-        match self {
-            Height::Length(v, l) => format!("{}{}", v, l.unit_str()),
-            Height::Percentage(v, p) => format!("{}{}", v, p.unit_str()),
-            Height::Auto(a) => a.unit_str(),
-        }
+        self.value.style_value_helper()
     }
 }
