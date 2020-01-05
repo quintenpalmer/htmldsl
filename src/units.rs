@@ -33,3 +33,35 @@ impl CharsetValue {
         }
     }
 }
+
+pub enum Length {
+    Pixel,
+    Centimeter,
+    ViewportHeight,
+}
+
+impl Length {
+    pub fn unit_str(&self) -> String {
+        match self {
+            Length::Pixel => "px".into(),
+            Length::Centimeter => "cm".into(),
+            Length::ViewportHeight => "vh".into(),
+        }
+    }
+}
+
+pub struct Percentage {}
+
+impl Percentage {
+    pub fn unit_str(&self) -> String {
+        "%".into()
+    }
+}
+
+pub struct Auto {}
+
+impl Auto {
+    pub fn unit_str(&self) -> String {
+        "auto".into()
+    }
+}
