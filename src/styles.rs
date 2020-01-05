@@ -21,8 +21,16 @@ impl NumberLikeValue {
     }
 }
 
-pub struct Margin {
-    pub value: u32,
+pub enum Margin {
+    AllFour(NumberLikeValue),
+    VerticalHorizontal(NumberLikeValue, NumberLikeValue),
+    TopHorizontalBotton(NumberLikeValue, NumberLikeValue, NumberLikeValue),
+    TopRightBottonLeft(
+        NumberLikeValue,
+        NumberLikeValue,
+        NumberLikeValue,
+        NumberLikeValue,
+    ),
 }
 
 impl Style for Margin {
@@ -31,7 +39,25 @@ impl Style for Margin {
     }
 
     fn style_value(&self) -> String {
-        format!("{} auto", self.value)
+        match self {
+            Margin::AllFour(v) => v.style_value_helper(),
+            Margin::VerticalHorizontal(v, h) => {
+                format!("{} {}", v.style_value_helper(), h.style_value_helper())
+            }
+            Margin::TopHorizontalBotton(t, h, b) => format!(
+                "{} {} {}",
+                t.style_value_helper(),
+                h.style_value_helper(),
+                b.style_value_helper()
+            ),
+            Margin::TopRightBottonLeft(t, r, b, l) => format!(
+                "{} {} {} {}",
+                t.style_value_helper(),
+                r.style_value_helper(),
+                b.style_value_helper(),
+                l.style_value_helper()
+            ),
+        }
     }
 }
 
