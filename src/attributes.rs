@@ -29,7 +29,7 @@ impl<'a> Attribute for StyleAttr<'a> {
         format!(
             "\"{}\"",
             self.values.iter().fold("".into(), |rendered, a| {
-                format!("{}; {}: {};", rendered, a.style_key(), a.style_value())
+                format!("{}; {}: {}", rendered, a.style_key(), a.style_value())
             })
         )
     }
