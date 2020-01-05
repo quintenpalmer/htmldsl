@@ -5,7 +5,6 @@ mod traits;
 pub mod units;
 
 pub use traits::element_traits::Element;
-pub use traits::style_traits::Style;
 
 pub fn render_simple_html_page(html: element::Html) -> String {
     format!(
