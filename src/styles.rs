@@ -5,32 +5,27 @@ pub trait Style {
     fn style_value(&self) -> String;
 }
 
-pub enum NumberLikeValue {
+pub enum NumberOrAuto {
     Length(u32, units::Length),
     Percentage(u32, units::Percentage),
     Auto(units::Auto),
 }
 
-impl NumberLikeValue {
+impl NumberOrAuto {
     fn style_value_helper(&self) -> String {
         match self {
-            NumberLikeValue::Length(v, l) => format!("{}{}", v, l.unit_str()),
-            NumberLikeValue::Percentage(v, p) => format!("{}{}", v, p.unit_str()),
-            NumberLikeValue::Auto(a) => a.unit_str(),
+            NumberOrAuto::Length(v, l) => format!("{}{}", v, l.unit_str()),
+            NumberOrAuto::Percentage(v, p) => format!("{}{}", v, p.unit_str()),
+            NumberOrAuto::Auto(a) => a.unit_str(),
         }
     }
 }
 
 pub enum Margin {
-    AllFour(NumberLikeValue),
-    VerticalHorizontal(NumberLikeValue, NumberLikeValue),
-    TopHorizontalBotton(NumberLikeValue, NumberLikeValue, NumberLikeValue),
-    TopRightBottonLeft(
-        NumberLikeValue,
-        NumberLikeValue,
-        NumberLikeValue,
-        NumberLikeValue,
-    ),
+    AllFour(NumberOrAuto),
+    VerticalHorizontal(NumberOrAuto, NumberOrAuto),
+    TopHorizontalBotton(NumberOrAuto, NumberOrAuto, NumberOrAuto),
+    TopRightBottonLeft(NumberOrAuto, NumberOrAuto, NumberOrAuto, NumberOrAuto),
 }
 
 impl Style for Margin {
@@ -90,7 +85,7 @@ impl Style for BackgroundColor {
 }
 
 pub struct Height {
-    pub value: NumberLikeValue,
+    pub value: NumberOrAuto,
 }
 
 impl Style for Height {

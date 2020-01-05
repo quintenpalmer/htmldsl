@@ -32,7 +32,7 @@ pub use styles::BackgroundColor;
 pub use styles::Height;
 pub use styles::Margin;
 pub use styles::MaxWidth;
-pub use styles::NumberLikeValue;
+pub use styles::NumberOrAuto;
 pub use styles::Style;
 pub use units::Auto;
 pub use units::CharsetValue;
