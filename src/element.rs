@@ -1,4 +1,4 @@
-use super::attributes;
+use super::attributes::{self, Attribute};
 
 pub fn render_simple_html_page(html: Html) -> String {
     format!("<!DOCTYPE html>{}", render_tag_element(&html))
@@ -34,7 +34,7 @@ pub trait AsTagRenderable {
 
 pub trait TagRenderable {
     fn get_name(&self) -> String;
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute>;
+    fn get_attributes(&self) -> Vec<&dyn Attribute>;
     fn get_children(&self) -> Vec<Renderable>;
 }
 
@@ -69,9 +69,9 @@ fn render_tag_element(tag_element: &dyn TagRenderable) -> String {
 }
 
 fn full_attrs<'a>(
-    mut attrs: Vec<&'a dyn attributes::Attribute>,
+    mut attrs: Vec<&'a dyn Attribute>,
     styles: &'a attributes::StyleAttr<'a>,
-) -> Vec<&'a dyn attributes::Attribute> {
+) -> Vec<&'a dyn Attribute> {
     if styles.values.len() > 0 {
         attrs.push(styles);
     }
@@ -90,7 +90,7 @@ impl<'a> TagRenderable for Html<'a> {
         "html".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![&self.lang], &self.styles)
     }
 
@@ -118,7 +118,7 @@ impl<'a> TagRenderable for Head<'a> {
         "head".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -141,7 +141,7 @@ impl<'a> TagRenderable for Meta<'a> {
         "meta".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(
             self.charset.as_ref().map_or(Vec::new(), |v| vec![v]),
             &self.styles,
@@ -163,7 +163,7 @@ impl<'a> TagRenderable for Body<'a> {
         "body".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -186,7 +186,7 @@ impl<'a> TagRenderable for Div<'a> {
         "div".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -213,7 +213,7 @@ impl<'a> TagRenderable for H1<'a> {
         "h1".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -240,7 +240,7 @@ impl<'a> TagRenderable for P<'a> {
         "p".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -268,7 +268,7 @@ impl<'a> TagRenderable for Table<'a> {
         "table".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -297,7 +297,7 @@ impl<'a> TagRenderable for Thead<'a> {
         "thead".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -320,7 +320,7 @@ impl<'a> TagRenderable for Thr<'a> {
         "tr".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -343,7 +343,7 @@ impl<'a> TagRenderable for Th<'a> {
         "th".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -366,7 +366,7 @@ impl<'a> TagRenderable for Tbody<'a> {
         "tbody".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -389,7 +389,7 @@ impl<'a> TagRenderable for Tr<'a> {
         "tr".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -412,7 +412,7 @@ impl<'a> TagRenderable for Td<'a> {
         "td".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -435,7 +435,7 @@ impl<'a> TagRenderable for Code<'a> {
         "code".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
@@ -462,7 +462,7 @@ impl<'a> TagRenderable for Pre<'a> {
         "pre".into()
     }
 
-    fn get_attributes(&self) -> Vec<&dyn attributes::Attribute> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
         full_attrs(vec![], &self.styles)
     }
 
