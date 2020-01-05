@@ -7,16 +7,16 @@ pub trait Style {
 
 pub enum NumberOrAuto {
     Length(u32, units::Length),
-    Percentage(u32, units::Percentage),
-    Auto(units::Auto),
+    Percentage(u32),
+    Auto,
 }
 
 impl NumberOrAuto {
     fn style_value_helper(&self) -> String {
         match self {
             NumberOrAuto::Length(v, l) => format!("{}{}", v, l.unit_str()),
-            NumberOrAuto::Percentage(v, p) => format!("{}{}", v, p.unit_str()),
-            NumberOrAuto::Auto(a) => a.unit_str(),
+            NumberOrAuto::Percentage(v) => format!("{}{}", v, units::Percentage {}.unit_str()),
+            NumberOrAuto::Auto => units::Auto {}.unit_str(),
         }
     }
 }
