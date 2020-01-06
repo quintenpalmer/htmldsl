@@ -114,24 +114,6 @@ impl<'a> TagRenderable for Style<'a> {
     }
 }
 
-pub struct RawStyle {
-    pub raw_style: String,
-}
-
-impl TagRenderable for RawStyle {
-    fn get_name(&self) -> String {
-        "style".into()
-    }
-
-    fn get_attributes(&self) -> Vec<&dyn Attribute> {
-        Vec::new()
-    }
-
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        Err(self.raw_style.clone())
-    }
-}
-
 pub struct Body<'a> {
     pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
