@@ -85,7 +85,7 @@ pub mod attr_traits {
     }
 
     fn render_attribute(attribute: &dyn Attribute) -> String {
-        format!("{}={}", attribute.attr_key(), attribute.attr_value())
+        format!("{}=\"{}\"", attribute.attr_key(), attribute.attr_value())
     }
 }
 
@@ -96,12 +96,9 @@ pub mod style_traits {
     }
 
     pub fn render_styles(styles: &Vec<&dyn Style>) -> String {
-        format!(
-            "\"{}\"",
-            styles.into_iter().fold("".into(), |rendered, s| {
-                format!("{}; {}", render_style(*s), rendered)
-            })
-        )
+        styles.into_iter().fold("".into(), |rendered, s| {
+            format!("{}; {}", render_style(*s), rendered)
+        })
     }
 
     fn render_style(style: &dyn Style) -> String {
