@@ -122,6 +122,20 @@ impl Style for BackgroundColor {
     }
 }
 
+pub struct Color {
+    pub color_value: String,
+}
+
+impl Style for Color {
+    fn style_key(&self) -> String {
+        "color".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.color_value.clone()
+    }
+}
+
 pub struct Height {
     pub value: units::NumberOrAuto,
 }
