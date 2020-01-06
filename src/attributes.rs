@@ -12,12 +12,7 @@ impl<'a> Attribute for StyleAttr<'a> {
     }
 
     fn attr_value(&self) -> String {
-        format!(
-            "\"{}\"",
-            self.values.iter().fold("".into(), |rendered, a| {
-                format!("{}; {}: {}", rendered, a.style_key(), a.style_value())
-            })
-        )
+        style_traits::render_styles(&self.values)
     }
 }
 

@@ -84,4 +84,17 @@ pub mod style_traits {
         fn style_key(&self) -> String;
         fn style_value(&self) -> String;
     }
+
+    pub fn render_styles(styles: &Vec<&dyn Style>) -> String {
+        format!(
+            "\"{}\"",
+            styles.into_iter().fold("".into(), |rendered, s| {
+                format!("{}; {}", rendered, render_style(*s))
+            })
+        )
+    }
+
+    fn render_style(style: &dyn Style) -> String {
+        format!("{}: {}", style.style_key(), style.style_value())
+    }
 }
