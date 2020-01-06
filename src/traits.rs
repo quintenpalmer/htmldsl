@@ -38,7 +38,7 @@ pub mod element_traits {
     pub trait TagRenderable {
         fn get_name(&self) -> String;
         fn get_attributes(&self) -> Vec<&dyn attr_traits::Attribute>;
-        fn get_children(&self) -> Vec<Renderable>;
+        fn get_children(&self) -> Result<Vec<Renderable>, String>;
     }
 
     pub enum Renderable<'a> {
@@ -52,10 +52,12 @@ pub mod element_traits {
                 Renderable::Tag(ref tag_element) => {
                     let name = tag_element.get_name();
                     let attrs = tag_element.get_attributes();
-                    let rendered_children = tag_element
-                        .get_children()
-                        .into_iter()
-                        .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render()));
+                    let rendered_children = match tag_element.get_children() {
+                        Ok(v) => v
+                            .into_iter()
+                            .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render())),
+                        Err(s) => s,
+                    };
                     format!(
                         "<{}{}>{}</{}>",
                         name,

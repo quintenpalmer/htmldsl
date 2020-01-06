@@ -33,7 +33,7 @@ impl<'a> TagRenderable for Html<'a> {
         util::full_attrs(vec![&self.lang], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         match self.head {
             Some(ref v) => ret.push(Renderable::Tag(v)),
@@ -43,7 +43,7 @@ impl<'a> TagRenderable for Html<'a> {
             Some(ref v) => ret.push(Renderable::Tag(v)),
             None => (),
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -61,12 +61,12 @@ impl<'a> TagRenderable for Head<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.metas.iter() {
             ret.push(Renderable::Tag(m));
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -87,8 +87,8 @@ impl<'a> TagRenderable for Meta<'a> {
         )
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
-        vec![]
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        Ok(vec![])
     }
 }
 
@@ -106,12 +106,12 @@ impl<'a> TagRenderable for Body<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -129,12 +129,12 @@ impl<'a> TagRenderable for Div<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -154,12 +154,12 @@ impl<'a> TagRenderable for H1<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -179,12 +179,12 @@ impl<'a> TagRenderable for P<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -205,14 +205,14 @@ impl<'a> TagRenderable for Table<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         match self.thead {
             Some(ref v) => ret.push(Renderable::Tag(v)),
             None => (),
         }
         ret.push(Renderable::Tag(&self.tbody));
-        ret
+        Ok(ret)
     }
 }
 
@@ -232,12 +232,12 @@ impl<'a> TagRenderable for Thead<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.trs.iter() {
             ret.push(Renderable::Tag(m));
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -255,12 +255,12 @@ impl<'a> TagRenderable for Thr<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.ths.iter() {
             ret.push(Renderable::Tag(m));
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -278,12 +278,12 @@ impl<'a> TagRenderable for Th<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -301,12 +301,12 @@ impl<'a> TagRenderable for Tbody<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.trs.iter() {
             ret.push(Renderable::Tag(m));
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -324,12 +324,12 @@ impl<'a> TagRenderable for Tr<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.tds.iter() {
             ret.push(Renderable::Tag(m));
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -347,12 +347,12 @@ impl<'a> TagRenderable for Td<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -370,12 +370,12 @@ impl<'a> TagRenderable for Code<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
@@ -395,12 +395,12 @@ impl<'a> TagRenderable for Pre<'a> {
         util::full_attrs(vec![], &self.styles)
     }
 
-    fn get_children(&self) -> Vec<Renderable> {
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.children.iter() {
             ret.push(m.into_renderable());
         }
-        ret
+        Ok(ret)
     }
 }
 
