@@ -6,6 +6,14 @@ pub mod element_traits {
         Text(String),
     }
 
+    pub fn tag<'a>(r: &'a dyn GenericRenderable) -> Element<'a> {
+        Element::Tag(r)
+    }
+
+    pub fn text<'a>(s: String) -> Element<'a> {
+        Element::Text(s)
+    }
+
     impl<'a> Element<'a> {
         pub fn into_renderable(&self) -> Renderable {
             match self {
