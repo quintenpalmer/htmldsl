@@ -97,7 +97,7 @@ pub mod style_traits {
         format!(
             "\"{}\"",
             styles.into_iter().fold("".into(), |rendered, s| {
-                format!("{}; {}", rendered, render_style(*s))
+                format!("{}; {}", render_style(*s), rendered)
             })
         )
     }
