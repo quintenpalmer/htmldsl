@@ -68,14 +68,14 @@ pub mod attr_traits {
         fn attr_value(&self) -> String;
     }
 
-    fn render_attribute(attribute: &dyn Attribute) -> String {
-        format!("{}={}", attribute.attr_key(), attribute.attr_value())
-    }
-
     pub fn render_attributes(attributes: Vec<&dyn Attribute>) -> String {
         attributes.into_iter().fold("".into(), |rendered, a| {
             format!("{} {}", rendered, render_attribute(a))
         })
+    }
+
+    fn render_attribute(attribute: &dyn Attribute) -> String {
+        format!("{}={}", attribute.attr_key(), attribute.attr_value())
     }
 }
 
