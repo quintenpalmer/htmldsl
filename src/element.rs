@@ -1,6 +1,6 @@
 use super::attributes;
 use super::traits::attr_traits::Attribute;
-use super::traits::element_traits::{Element, GenericElement, Renderable, TagRenderable};
+use super::traits::element_traits::{Element, GenericRenderable, Renderable, TagRenderable};
 
 mod util {
     use crate::attributes;
@@ -138,7 +138,7 @@ impl<'a> TagRenderable for Div<'a> {
     }
 }
 
-impl<'a> GenericElement for Div<'a> {
+impl<'a> GenericRenderable for Div<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
@@ -165,7 +165,7 @@ impl<'a> TagRenderable for H1<'a> {
     }
 }
 
-impl<'a> GenericElement for H1<'a> {
+impl<'a> GenericRenderable for H1<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
@@ -192,7 +192,7 @@ impl<'a> TagRenderable for P<'a> {
     }
 }
 
-impl<'a> GenericElement for P<'a> {
+impl<'a> GenericRenderable for P<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
@@ -222,7 +222,7 @@ impl<'a> TagRenderable for Table<'a> {
     }
 }
 
-impl<'a> GenericElement for Table<'a> {
+impl<'a> GenericRenderable for Table<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
@@ -387,7 +387,7 @@ impl<'a> TagRenderable for Code<'a> {
     }
 }
 
-impl<'a> GenericElement for Code<'a> {
+impl<'a> GenericRenderable for Code<'a> {
     fn is_generic_element_marker(&self) {}
 }
 
@@ -414,6 +414,6 @@ impl<'a> TagRenderable for Pre<'a> {
     }
 }
 
-impl<'a> GenericElement for Pre<'a> {
+impl<'a> GenericRenderable for Pre<'a> {
     fn is_generic_element_marker(&self) {}
 }

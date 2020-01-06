@@ -2,7 +2,7 @@ pub mod element_traits {
     use super::attr_traits;
 
     pub enum Element {
-        Tag(Box<dyn GenericElement>),
+        Tag(Box<dyn GenericRenderable>),
         Text(String),
     }
 
@@ -15,11 +15,11 @@ pub mod element_traits {
         }
     }
 
-    pub trait GenericElement: AsTagRenderable + TagRenderable {
+    pub trait GenericRenderable: AsTagRenderable + TagRenderable {
         fn is_generic_element_marker(&self);
     }
 
-    impl<T: GenericElement> AsTagRenderable for T {
+    impl<T: GenericRenderable> AsTagRenderable for T {
         fn as_tag_renderable(&self) -> &dyn TagRenderable {
             self
         }
