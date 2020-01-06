@@ -49,7 +49,6 @@ impl<'a> TagRenderable for Html<'a> {
 
 pub struct Head<'a> {
     pub metas: Vec<Meta<'a>>,
-    pub styles: attributes::StyleAttr<'a>,
 }
 
 impl<'a> TagRenderable for Head<'a> {
@@ -58,7 +57,7 @@ impl<'a> TagRenderable for Head<'a> {
     }
 
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
-        util::full_attrs(vec![], &self.styles)
+        Vec::new()
     }
 
     fn get_children(&self) -> Result<Vec<Renderable>, String> {
