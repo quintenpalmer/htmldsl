@@ -1,4 +1,5 @@
 use super::attributes;
+use super::style_sheet;
 use super::traits::attr_traits::Attribute;
 use super::traits::element_traits::{Element, GenericRenderable, Renderable, TagRenderable};
 
@@ -49,7 +50,7 @@ impl<'a> TagRenderable for Html<'a> {
 
 pub struct Head<'a> {
     pub metas: Vec<Meta<'a>>,
-    pub styles: Vec<RawStyle>,
+    pub styles: Vec<Style<'a>>,
 }
 
 impl<'a> TagRenderable for Head<'a> {
@@ -92,6 +93,24 @@ impl<'a> TagRenderable for Meta<'a> {
 
     fn get_children(&self) -> Result<Vec<Renderable>, String> {
         Ok(vec![])
+    }
+}
+
+pub struct Style<'a> {
+    pub style_sheet: Vec<style_sheet::StyleAssignment<'a>>,
+}
+
+impl<'a> TagRenderable for Style<'a> {
+    fn get_name(&self) -> String {
+        "style".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        Vec::new()
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        Err(style_sheet::style_sheet_string(&self.style_sheet))
     }
 }
 
