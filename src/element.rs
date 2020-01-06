@@ -139,7 +139,7 @@ impl<'a> TagRenderable for Div<'a> {
 }
 
 impl<'a> GenericRenderable for Div<'a> {
-    fn is_generic_element_marker(&self) {}
+    fn is_generic_renderable_marker(&self) {}
 }
 
 pub struct H1<'a> {
@@ -166,7 +166,7 @@ impl<'a> TagRenderable for H1<'a> {
 }
 
 impl<'a> GenericRenderable for H1<'a> {
-    fn is_generic_element_marker(&self) {}
+    fn is_generic_renderable_marker(&self) {}
 }
 
 pub struct P<'a> {
@@ -193,7 +193,7 @@ impl<'a> TagRenderable for P<'a> {
 }
 
 impl<'a> GenericRenderable for P<'a> {
-    fn is_generic_element_marker(&self) {}
+    fn is_generic_renderable_marker(&self) {}
 }
 
 pub struct Table<'a> {
@@ -223,7 +223,7 @@ impl<'a> TagRenderable for Table<'a> {
 }
 
 impl<'a> GenericRenderable for Table<'a> {
-    fn is_generic_element_marker(&self) {}
+    fn is_generic_renderable_marker(&self) {}
 }
 
 pub struct Thead<'a> {
@@ -388,7 +388,7 @@ impl<'a> TagRenderable for Code<'a> {
 }
 
 impl<'a> GenericRenderable for Code<'a> {
-    fn is_generic_element_marker(&self) {}
+    fn is_generic_renderable_marker(&self) {}
 }
 
 pub struct Pre<'a> {
@@ -415,5 +415,5 @@ impl<'a> TagRenderable for Pre<'a> {
 }
 
 impl<'a> GenericRenderable for Pre<'a> {
-    fn is_generic_element_marker(&self) {}
+    fn is_generic_renderable_marker(&self) {}
 }

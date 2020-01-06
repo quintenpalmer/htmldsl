@@ -16,7 +16,7 @@ pub mod element_traits {
     }
 
     pub trait GenericRenderable: AsTagRenderable + TagRenderable {
-        fn is_generic_element_marker(&self);
+        fn is_generic_renderable_marker(&self);
     }
 
     impl<T: GenericRenderable> AsTagRenderable for T {
