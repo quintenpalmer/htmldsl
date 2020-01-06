@@ -93,7 +93,7 @@ impl<'a> TagRenderable for Meta<'a> {
 }
 
 pub struct Body<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -116,7 +116,7 @@ impl<'a> TagRenderable for Body<'a> {
 }
 
 pub struct Div<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -141,7 +141,7 @@ impl<'a> TagRenderable for Div<'a> {
 impl<'a> GenericRenderable for Div<'a> {}
 
 pub struct H1<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -166,7 +166,7 @@ impl<'a> TagRenderable for H1<'a> {
 impl<'a> GenericRenderable for H1<'a> {}
 
 pub struct P<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -265,7 +265,7 @@ impl<'a> TagRenderable for Thr<'a> {
 }
 
 pub struct Th<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -334,7 +334,7 @@ impl<'a> TagRenderable for Tr<'a> {
 }
 
 pub struct Td<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -357,7 +357,7 @@ impl<'a> TagRenderable for Td<'a> {
 }
 
 pub struct Code<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -382,7 +382,7 @@ impl<'a> TagRenderable for Code<'a> {
 impl<'a> GenericRenderable for Code<'a> {}
 
 pub struct Pre<'a> {
-    pub children: Vec<Element>,
+    pub children: Vec<Element<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
