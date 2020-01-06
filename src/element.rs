@@ -49,6 +49,7 @@ impl<'a> TagRenderable for Html<'a> {
 
 pub struct Head<'a> {
     pub metas: Vec<Meta<'a>>,
+    pub styles: Vec<RawStyle>,
 }
 
 impl<'a> TagRenderable for Head<'a> {
@@ -64,6 +65,9 @@ impl<'a> TagRenderable for Head<'a> {
         let mut ret: Vec<Renderable> = Vec::new();
         for m in self.metas.iter() {
             ret.push(Renderable::Tag(m));
+        }
+        for s in self.styles.iter() {
+            ret.push(Renderable::Tag(s));
         }
         Ok(ret)
     }
@@ -88,6 +92,24 @@ impl<'a> TagRenderable for Meta<'a> {
 
     fn get_children(&self) -> Result<Vec<Renderable>, String> {
         Ok(vec![])
+    }
+}
+
+pub struct RawStyle {
+    pub raw_style: String,
+}
+
+impl TagRenderable for RawStyle {
+    fn get_name(&self) -> String {
+        "style".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        Vec::new()
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        Err(self.raw_style.clone())
     }
 }
 
