@@ -136,6 +136,20 @@ impl Style for Color {
     }
 }
 
+pub struct FontFamily {
+    pub name: String,
+}
+
+impl Style for FontFamily {
+    fn style_key(&self) -> String {
+        "font-family".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.name.clone()
+    }
+}
+
 pub struct Height {
     pub value: units::NumberOrAuto,
 }
