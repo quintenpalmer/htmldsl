@@ -97,7 +97,7 @@ impl<'a> TagRenderable for Meta<'a> {
 }
 
 pub struct Style<'a> {
-    pub style_sheet: Vec<style_sheet::StyleAssignment<'a>>,
+    pub style_sheet: style_sheet::StyleSheet<'a>,
 }
 
 impl<'a> TagRenderable for Style<'a> {
