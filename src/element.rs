@@ -138,9 +138,7 @@ impl<'a> TagRenderable for Div<'a> {
     }
 }
 
-impl<'a> GenericRenderable for Div<'a> {
-    fn is_generic_renderable_marker(&self) {}
-}
+impl<'a> GenericRenderable for Div<'a> {}
 
 pub struct H1<'a> {
     pub children: Vec<Element>,
@@ -165,9 +163,7 @@ impl<'a> TagRenderable for H1<'a> {
     }
 }
 
-impl<'a> GenericRenderable for H1<'a> {
-    fn is_generic_renderable_marker(&self) {}
-}
+impl<'a> GenericRenderable for H1<'a> {}
 
 pub struct P<'a> {
     pub children: Vec<Element>,
@@ -192,9 +188,7 @@ impl<'a> TagRenderable for P<'a> {
     }
 }
 
-impl<'a> GenericRenderable for P<'a> {
-    fn is_generic_renderable_marker(&self) {}
-}
+impl<'a> GenericRenderable for P<'a> {}
 
 pub struct Table<'a> {
     pub thead: Option<Thead<'a>>,
@@ -222,9 +216,7 @@ impl<'a> TagRenderable for Table<'a> {
     }
 }
 
-impl<'a> GenericRenderable for Table<'a> {
-    fn is_generic_renderable_marker(&self) {}
-}
+impl<'a> GenericRenderable for Table<'a> {}
 
 pub struct Thead<'a> {
     pub trs: Vec<Thr<'a>>,
@@ -387,9 +379,7 @@ impl<'a> TagRenderable for Code<'a> {
     }
 }
 
-impl<'a> GenericRenderable for Code<'a> {
-    fn is_generic_renderable_marker(&self) {}
-}
+impl<'a> GenericRenderable for Code<'a> {}
 
 pub struct Pre<'a> {
     pub children: Vec<Element>,
@@ -414,6 +404,4 @@ impl<'a> TagRenderable for Pre<'a> {
     }
 }
 
-impl<'a> GenericRenderable for Pre<'a> {
-    fn is_generic_renderable_marker(&self) {}
-}
+impl<'a> GenericRenderable for Pre<'a> {}
