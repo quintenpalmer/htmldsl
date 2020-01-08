@@ -55,7 +55,7 @@ pub mod element_traits {
             self.render_helper(Some(0))
         }
 
-        fn render_helper(&self, _indent: Option<u32>) -> String {
+        fn render_helper(&self, indent: Option<usize>) -> String {
             match self {
                 Renderable::Tag(ref tag_element) => {
                     let name = tag_element.get_name();
@@ -73,7 +73,32 @@ pub mod element_traits {
                         leading_indent_string,
                         closing_new_line,
                         closing_indent_string,
-                    ) = ("".into(), "".into(), "".into(), "".into());
+                    ) = match indent {
+                        Some(v) => {
+                            let all_children_text = match children {
+                                Ok(v) => v.iter().fold(true, |prev, curr| {
+                                    prev && match curr {
+                                        Renderable::Tag(_) => false,
+                                        Renderable::Text(_) => true,
+                                    }
+                                }),
+                                Err(_) => true,
+                            };
+
+                            let (closing_new_line, closing_indent_string): (String, String) =
+                                match all_children_text {
+                                    true => ("".into(), "".into()),
+                                    false => ("\n".into(), "\t".repeat(v)),
+                                };
+                            (
+                                "\n",
+                                "\t".repeat(v),
+                                closing_new_line,
+                                closing_indent_string,
+                            )
+                        }
+                        None => ("".into(), "".into(), "".into(), "".into()),
+                    };
 
                     format!(
                         "{}{}<{}{}>{}{}{}</{}>",
