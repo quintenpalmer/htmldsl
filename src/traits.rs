@@ -48,14 +48,22 @@ pub mod element_traits {
 
     impl<'a> Renderable<'a> {
         pub fn render(&self) -> String {
+            self.render_helper(None)
+        }
+
+        pub fn render_pretty(&self) -> String {
+            self.render_helper(Some(0))
+        }
+
+        fn render_helper(&self, _indent: Option<u32>) -> String {
             match self {
                 Renderable::Tag(ref tag_element) => {
                     let name = tag_element.get_name();
                     let attrs = tag_element.get_attributes();
                     let rendered_children = match tag_element.get_children() {
-                        Ok(v) => v
-                            .into_iter()
-                            .fold("".into(), |prev, curr| format!("{}{}", prev, curr.render())),
+                        Ok(v) => v.into_iter().fold("".into(), |prev, curr| {
+                            format!("{}{}", prev, curr.render_helper(_indent))
+                        }),
                         Err(s) => s,
                     };
                     format!(
