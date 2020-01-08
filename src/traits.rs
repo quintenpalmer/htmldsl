@@ -60,11 +60,12 @@ pub mod element_traits {
                 Renderable::Tag(ref tag_element) => {
                     let name = tag_element.get_name();
                     let attrs = tag_element.get_attributes();
-                    let rendered_children = match tag_element.get_children() {
-                        Ok(v) => v.into_iter().fold("".into(), |prev, curr| {
-                            format!("{}{}", prev, curr.render_helper(_indent.map(|x| x + 1)))
+                    let children = tag_element.get_children();
+                    let rendered_children = match children {
+                        Ok(ref v) => v.iter().fold("".into(), |prev, curr| {
+                            format!("{}{}", prev, curr.render_helper(indent.map(|x| x + 1)))
                         }),
-                        Err(s) => s,
+                        Err(ref s) => s.clone(),
                     };
                     format!(
                         "<{}{}>{}</{}>",
