@@ -67,11 +67,23 @@ pub mod element_traits {
                         }),
                         Err(ref s) => s.clone(),
                     };
+
+                    let (
+                        leading_new_line,
+                        leading_indent_string,
+                        closing_new_line,
+                        closing_indent_string,
+                    ) = ("".into(), "".into(), "".into(), "".into());
+
                     format!(
-                        "<{}{}>{}</{}>",
+                        "{}{}<{}{}>{}{}{}</{}>",
+                        leading_new_line,
+                        leading_indent_string,
                         name,
                         attr_traits::render_attributes(attrs),
                         rendered_children,
+                        closing_new_line,
+                        closing_indent_string,
                         name
                     )
                 }
