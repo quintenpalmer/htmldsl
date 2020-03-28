@@ -1,20 +1,20 @@
 pub mod element_traits {
     use super::attr_traits;
 
-    pub enum Element<'a> {
-        Tag(&'a dyn GenericRenderable),
+    pub enum Element {
+        Tag(Box<dyn GenericRenderable>),
         Text(String),
     }
 
-    pub fn tag<'a>(r: &'a dyn GenericRenderable) -> Element<'a> {
+    pub fn tag<'a>(r: Box<dyn GenericRenderable>) -> Element {
         Element::Tag(r)
     }
 
-    pub fn text<'a>(s: String) -> Element<'a> {
+    pub fn text<'a>(s: String) -> Element {
         Element::Text(s)
     }
 
-    impl<'a> Element<'a> {
+    impl<'a> Element {
         pub fn into_renderable(&self) -> Renderable {
             match self {
                 Element::Tag(ref ge) => Renderable::Tag((**ge).as_tag_renderable()),
