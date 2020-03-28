@@ -427,3 +427,24 @@ impl<'a> TagRenderable for Pre<'a> {
 }
 
 impl<'a> GenericRenderable for Pre<'a> {}
+
+pub struct Img<'a> {
+    pub src: attributes::Src,
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> TagRenderable for Img<'a> {
+    fn get_name(&self) -> String {
+        "img".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        util::full_attrs(vec![&self.src], &self.styles)
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        Ok(Vec::new())
+    }
+}
+
+impl<'a> GenericRenderable for Img<'a> {}

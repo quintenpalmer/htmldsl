@@ -44,3 +44,17 @@ impl Attribute for Charset {
         self.value.char_set_str()
     }
 }
+
+pub struct Src {
+    pub value: units::SourceValue,
+}
+
+impl Attribute for Src {
+    fn attr_key(&self) -> String {
+        "src".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.value.source_value_str()
+    }
+}

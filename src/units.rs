@@ -34,6 +34,20 @@ impl CharsetValue {
     }
 }
 
+pub struct SourceValue {
+    inner_string: String,
+}
+
+impl SourceValue {
+    pub fn new(s: String) -> Self {
+        SourceValue { inner_string: s }
+    }
+
+    pub fn source_value_str(&self) -> String {
+        self.inner_string.clone()
+    }
+}
+
 pub enum Length {
     Pixel,
     Centimeter,
