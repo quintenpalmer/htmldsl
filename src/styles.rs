@@ -104,7 +104,7 @@ impl Style for MaxWidth {
     }
 
     fn style_value(&self) -> String {
-        format!("{}cm", self.value)
+        format!("{}px", self.value)
     }
 }
 
