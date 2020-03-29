@@ -162,6 +162,31 @@ impl<'a> TagRenderable for Div<'a> {
 
 impl<'a> GenericRenderable for Div<'a> {}
 
+pub struct Span<'a> {
+    pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> TagRenderable for Span<'a> {
+    fn get_name(&self) -> String {
+        "span".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        util::full_attrs(vec![], &self.styles)
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        Ok(ret)
+    }
+}
+
+impl<'a> GenericRenderable for Span<'a> {}
+
 pub struct H1<'a> {
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
