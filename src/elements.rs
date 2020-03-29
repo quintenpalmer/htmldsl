@@ -498,3 +498,29 @@ impl<'a> TagRenderable for Img<'a> {
 }
 
 impl<'a> GenericRenderable for Img<'a> {}
+
+pub struct A<'a> {
+    pub href: attributes::Href,
+    pub children: Vec<Element>,
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> TagRenderable for A<'a> {
+    fn get_name(&self) -> String {
+        "a".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        util::full_attrs(vec![&self.href], &self.styles)
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        let mut ret: Vec<Renderable> = Vec::new();
+        for m in self.children.iter() {
+            ret.push(m.into_renderable());
+        }
+        Ok(ret)
+    }
+}
+
+impl<'a> GenericRenderable for A<'a> {}

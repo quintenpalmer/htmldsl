@@ -58,3 +58,17 @@ impl Attribute for Src {
         self.value.source_value_str()
     }
 }
+
+pub struct Href {
+    pub value: units::SourceValue,
+}
+
+impl Attribute for Href {
+    fn attr_key(&self) -> String {
+        "href".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.value.source_value_str()
+    }
+}
