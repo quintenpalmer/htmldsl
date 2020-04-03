@@ -1,6 +1,22 @@
 use super::traits::style_traits::Style;
 use super::units;
 
+pub enum Display {
+    Inline,
+}
+
+impl Style for Display {
+    fn style_key(&self) -> String {
+        "display".into()
+    }
+
+    fn style_value(&self) -> String {
+        match self {
+            Display::Inline => "inline".into(),
+        }
+    }
+}
+
 pub enum Margin {
     AllFour(units::NumberOrAuto),
     VerticalHorizontal(units::NumberOrAuto, units::NumberOrAuto),
