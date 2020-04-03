@@ -48,6 +48,48 @@ impl SourceValue {
     }
 }
 
+pub enum InputTypeValue {
+    Submit,
+}
+
+impl InputTypeValue {
+    pub fn value_string(&self) -> String {
+        match self {
+            InputTypeValue::Submit => "submit".into(),
+        }
+    }
+}
+
+pub struct ValueString {
+    inner_string: String,
+}
+
+impl ValueString {
+    pub fn new(s: String) -> Self {
+        ValueString { inner_string: s }
+    }
+
+    pub fn value_string(&self) -> String {
+        self.inner_string.clone()
+    }
+}
+
+pub enum FormmethodValue {
+    Get,
+    Post,
+    Dialog,
+}
+
+impl FormmethodValue {
+    pub fn value_string(&self) -> String {
+        match self {
+            FormmethodValue::Get => "get".into(),
+            FormmethodValue::Post => "post".into(),
+            FormmethodValue::Dialog => "dialog".into(),
+        }
+    }
+}
+
 pub enum Length {
     Pixel,
     Centimeter,

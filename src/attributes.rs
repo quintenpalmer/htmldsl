@@ -72,3 +72,73 @@ impl Attribute for Href {
         self.value.source_value_str()
     }
 }
+
+pub struct Action {
+    pub value: units::SourceValue,
+}
+
+impl Attribute for Action {
+    fn attr_key(&self) -> String {
+        "action".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.value.source_value_str()
+    }
+}
+
+pub struct InputType {
+    pub inner: units::InputTypeValue,
+}
+
+impl Attribute for InputType {
+    fn attr_key(&self) -> String {
+        "type".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.inner.value_string()
+    }
+}
+
+pub struct Value {
+    pub inner: units::ValueString,
+}
+
+impl Attribute for Value {
+    fn attr_key(&self) -> String {
+        "value".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.inner.value_string()
+    }
+}
+
+pub struct Formmethod {
+    pub inner: units::FormmethodValue,
+}
+
+impl Attribute for Formmethod {
+    fn attr_key(&self) -> String {
+        "method".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.inner.value_string()
+    }
+}
+
+pub struct Name {
+    pub inner: units::ValueString,
+}
+
+impl Attribute for Name {
+    fn attr_key(&self) -> String {
+        "name".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.inner.value_string()
+    }
+}

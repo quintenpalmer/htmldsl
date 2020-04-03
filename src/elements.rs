@@ -524,3 +524,83 @@ impl<'a> TagRenderable for A<'a> {
 }
 
 impl<'a> GenericRenderable for A<'a> {}
+
+pub struct Form<'a> {
+    pub formmethod: attributes::Formmethod,
+    pub action: Option<attributes::Action>,
+    pub inputs: Vec<Input<'a>>,
+    pub button: Button,
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> TagRenderable for Form<'a> {
+    fn get_name(&self) -> String {
+        "form".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        let mut attrs: Vec<&dyn Attribute> = vec![&self.formmethod];
+        match self.action {
+            Some(ref a) => attrs.push(a),
+            None => {}
+        };
+        util::full_attrs(attrs, &self.styles)
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        let mut children: Vec<Renderable> =
+            self.inputs.iter().map(|x| Renderable::Tag(x)).collect();
+        children.push(Renderable::Tag(&self.button));
+        Ok(children)
+    }
+}
+
+impl<'a> GenericRenderable for Form<'a> {}
+
+pub struct Button {
+    pub child: Element,
+}
+
+impl TagRenderable for Button {
+    fn get_name(&self) -> String {
+        "button".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        Vec::new()
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        Ok(vec![self.child.into_renderable()])
+    }
+}
+
+impl GenericRenderable for Button {}
+
+pub struct Input<'a> {
+    pub type_: Option<attributes::InputType>,
+    pub name: attributes::Name,
+    pub value: attributes::Value,
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> TagRenderable for Input<'a> {
+    fn get_name(&self) -> String {
+        "input".into()
+    }
+
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        let mut attrs: Vec<&dyn Attribute> = vec![&self.name, &self.value];
+        match self.type_ {
+            Some(ref a) => attrs.push(a),
+            None => {}
+        };
+        util::full_attrs(attrs, &self.styles)
+    }
+
+    fn get_children(&self) -> Result<Vec<Renderable>, String> {
+        Ok(Vec::new())
+    }
+}
+
+impl<'a> GenericRenderable for Input<'a> {}
