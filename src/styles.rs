@@ -179,3 +179,17 @@ impl Style for Height {
         self.value.style_value_helper()
     }
 }
+
+pub struct Width {
+    pub value: units::NumberOrAuto,
+}
+
+impl Style for Width {
+    fn style_key(&self) -> String {
+        "width".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.style_value_helper()
+    }
+}
