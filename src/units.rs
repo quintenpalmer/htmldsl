@@ -161,3 +161,20 @@ impl NumberOrAuto {
         }
     }
 }
+
+pub enum VisibilityValue {
+    Visible,
+    Hidden,
+    Collapse,
+}
+
+impl VisibilityValue {
+    pub fn style_value_helper(&self) -> String {
+        match self {
+            VisibilityValue::Visible => "visible",
+            VisibilityValue::Hidden => "hidden",
+            VisibilityValue::Collapse => "collapse",
+        }
+        .into()
+    }
+}

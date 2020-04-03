@@ -193,3 +193,17 @@ impl Style for Width {
         self.value.style_value_helper()
     }
 }
+
+pub struct Visibility {
+    pub value: units::VisibilityValue,
+}
+
+impl Style for Visibility {
+    fn style_key(&self) -> String {
+        "visibility".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.style_value_helper()
+    }
+}
