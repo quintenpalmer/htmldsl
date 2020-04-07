@@ -35,9 +35,20 @@ pub mod element_traits {
         fn as_tag_renderable(&self) -> &dyn TagRenderable;
     }
 
-    pub trait TagRenderable {
+    pub trait TagRenderable:
+        TagRenderableName + TagRenderableAttrs + TagRenderableChildren
+    {
+    }
+
+    pub trait TagRenderableName {
         fn get_name(&self) -> String;
+    }
+
+    pub trait TagRenderableAttrs {
         fn get_attributes(&self) -> Vec<&dyn attr_traits::Attribute>;
+    }
+
+    pub trait TagRenderableChildren {
         fn get_children(&self) -> Result<Vec<Renderable>, String>;
     }
 
