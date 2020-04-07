@@ -554,7 +554,7 @@ pub struct Form<'a> {
     pub formmethod: attributes::Formmethod,
     pub action: Option<attributes::Action>,
     pub inputs: Vec<Input<'a>>,
-    pub button: Button,
+    pub button: Button<'a>,
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -582,17 +582,18 @@ impl<'a> TagRenderable for Form<'a> {
 
 impl<'a> GenericRenderable for Form<'a> {}
 
-pub struct Button {
+pub struct Button<'a> {
     pub child: Element,
+    pub styles: attributes::StyleAttr<'a>,
 }
 
-impl TagRenderable for Button {
+impl<'a> TagRenderable for Button<'a> {
     fn get_name(&self) -> String {
         "button".into()
     }
 
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
-        Vec::new()
+        util::full_attrs(vec![], &self.styles)
     }
 
     fn get_children(&self) -> Result<Vec<Renderable>, String> {
@@ -600,7 +601,7 @@ impl TagRenderable for Button {
     }
 }
 
-impl GenericRenderable for Button {}
+impl<'a> GenericRenderable for Button<'a> {}
 
 pub struct Input<'a> {
     pub type_: Option<attributes::InputType>,
