@@ -3,6 +3,8 @@ use super::units;
 
 pub enum Display {
     Inline,
+    Grid,
+    None,
 }
 
 impl Style for Display {
@@ -13,6 +15,8 @@ impl Style for Display {
     fn style_value(&self) -> String {
         match self {
             Display::Inline => "inline".into(),
+            Display::Grid => "grid".into(),
+            Display::None => "none".into(),
         }
     }
 }
