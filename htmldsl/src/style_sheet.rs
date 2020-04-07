@@ -1,4 +1,4 @@
-use super::traits::style_traits;
+use htmldsl_internal::style_traits;
 
 pub struct StyleSheet<'a> {
     pub assignments: Vec<StyleAssignment<'a>>,

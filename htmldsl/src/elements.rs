@@ -1,14 +1,14 @@
 use super::attributes;
 use super::style_sheet;
-use super::traits::attr_traits::Attribute;
-use super::traits::element_traits::{
+use htmldsl_internal::attr_traits::Attribute;
+use htmldsl_internal::element_traits::{
     Element, GenericRenderable, Renderable, TagRenderable, TagRenderableAttrs,
     TagRenderableChildren, TagRenderableName,
 };
 
 mod util {
     use crate::attributes;
-    use crate::traits::attr_traits::Attribute;
+    use htmldsl_internal::attr_traits::Attribute;
 
     pub fn full_attrs<'a>(
         mut attrs: Vec<&'a dyn Attribute>,

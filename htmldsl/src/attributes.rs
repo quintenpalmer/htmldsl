@@ -1,6 +1,6 @@
-use super::traits::attr_traits::Attribute;
-use super::traits::style_traits;
 use super::units;
+use htmldsl_internal::attr_traits::Attribute;
+use htmldsl_internal::style_traits;
 
 pub struct StyleAttr<'a> {
     pub values: Vec<&'a dyn style_traits::Style>,

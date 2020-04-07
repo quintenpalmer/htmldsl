@@ -1,5 +1,5 @@
-use super::traits::style_traits::Style;
 use super::units;
+use htmldsl_internal::style_traits::Style;
 
 pub enum Display {
     Inline,
