@@ -124,12 +124,14 @@ impl Auto {
 
 pub enum BorderStyle {
     Solid,
+    None,
 }
 
 impl BorderStyle {
     pub fn unit_str(&self) -> String {
         match self {
             BorderStyle::Solid => "solid".into(),
+            BorderStyle::None => "0px".into(),
         }
     }
 }
