@@ -7,6 +7,30 @@ extern crate quote;
 
 use proc_macro::TokenStream;
 
+#[proc_macro_derive(GenericRenderable)]
+pub fn derive_generic_renderable(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as syn::DeriveInput);
+
+    // Build the output, possibly using quasi-quotation
+    let expanded = impl_generic_renderable(&input);
+
+    // Parse back to a token stream and return it
+    expanded
+}
+
+fn impl_generic_renderable(ast: &syn::DeriveInput) -> TokenStream {
+    // Used in the quasi-quotation below as `#name`
+    let name = &ast.ident;
+
+    // Helper is provided for handling complex generic types correctly and effortlessly
+    let (impl_generics, ty_generics, where_clause) = ast.generics.split_for_impl();
+
+    let ret = quote! {
+        impl #impl_generics htmldsl_internal::element_traits::GenericRenderable for #name #ty_generics #where_clause {}
+    };
+    ret.into()
+}
+
 #[proc_macro_derive(TagRenderableName, attributes(tag_renderable_name))]
 pub fn derive_tag_renderable_name(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
