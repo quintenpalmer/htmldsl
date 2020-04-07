@@ -1,5 +1,5 @@
 [package]
-name = "htmldsl"
+name = "htmldsl_internal_derive"
 version = "0.1.0"
 authors = ["Quinten Palmer <quintenpalmer@gmail.com>"]
 edition = "2018"
@@ -8,4 +8,8 @@ edition = "2018"
 
 [dependencies]
 htmldsl_internal = {path = "../htmldsl_internal"}
-htmldsl_internal_derive = {path = "../htmldsl_internal_derive"}
+syn = "1.0"
+quote = "1.0"
+
+[lib]
+proc-macro = true

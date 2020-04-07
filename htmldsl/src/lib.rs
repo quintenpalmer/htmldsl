@@ -8,6 +8,9 @@ pub use htmldsl_internal::element_traits::tag;
 pub use htmldsl_internal::element_traits::text;
 pub use htmldsl_internal::element_traits::Element;
 
+#[macro_use]
+extern crate htmldsl_internal_derive;
+
 pub fn render_simple_html_page(pretty: bool, html: elements::Html) -> String {
     let tag = htmldsl_internal::element_traits::Renderable::Tag(&html);
     format!(

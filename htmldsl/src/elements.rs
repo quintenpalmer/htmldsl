@@ -21,6 +21,8 @@ mod util {
     }
 }
 
+#[derive(TagRenderableName)]
+#[tag_renderable_name(name = "html")]
 pub struct Html<'a> {
     pub head: Option<Head<'a>>,
     pub body: Option<Body<'a>>,
@@ -29,12 +31,6 @@ pub struct Html<'a> {
 }
 
 impl<'a> TagRenderable for Html<'a> {}
-
-impl<'a> TagRenderableName for Html<'a> {
-    fn get_name(&self) -> String {
-        "html".into()
-    }
-}
 
 impl<'a> TagRenderableAttrs for Html<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {

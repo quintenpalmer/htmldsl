@@ -2,4 +2,5 @@
 members = [
     "htmldsl",
     "htmldsl_internal",
+    "htmldsl_internal_derive",
 ]
