@@ -20,6 +20,7 @@ fn get_named_fields(fields: &syn::Fields) -> &syn::FieldsNamed {
 
 enum ChildrenGenType {
     Element,
+    Renderable,
 }
 
 pub fn impl_tag_renderable_children(ast: &syn::DeriveInput) -> TokenStream {
@@ -57,6 +58,7 @@ pub fn impl_tag_renderable_children(ast: &syn::DeriveInput) -> TokenStream {
 
                     o_gen_type = match named_value.as_str() {
                         "element" => Some((ChildrenGenType::Element, quote! { #field_name })),
+                        "renderable" => Some((ChildrenGenType::Renderable, quote! { #field_name })),
                         _ => panic!("unsupported generation type"),
                     };
                 } else {
@@ -76,6 +78,12 @@ pub fn impl_tag_renderable_children(ast: &syn::DeriveInput) -> TokenStream {
                 Ok(self.#children_name
                     .iter()
                     .map(|m| m.into_renderable())
+                    .collect())
+        },
+        ChildrenGenType::Renderable => quote! {
+                Ok(self.#children_name
+                    .iter()
+                    .map(|m| Renderable::Tag(m))
                     .collect())
         },
     };

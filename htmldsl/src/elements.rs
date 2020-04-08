@@ -240,9 +240,10 @@ impl<'a> TagRenderableChildren for Table<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "thead")]
 pub struct Thead<'a> {
+    #[tag_renderable_children(type = "renderable")]
     pub trs: Vec<Thr<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -253,19 +254,10 @@ impl<'a> TagRenderableAttrs for Thead<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Thead<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.trs.iter() {
-            ret.push(Renderable::Tag(m));
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "tr")]
 pub struct Thr<'a> {
+    #[tag_renderable_children(type = "renderable")]
     pub ths: Vec<Th<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -273,16 +265,6 @@ pub struct Thr<'a> {
 impl<'a> TagRenderableAttrs for Thr<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
-    }
-}
-
-impl<'a> TagRenderableChildren for Thr<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.ths.iter() {
-            ret.push(Renderable::Tag(m));
-        }
-        Ok(ret)
     }
 }
 
@@ -300,9 +282,10 @@ impl<'a> TagRenderableAttrs for Th<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "tbody")]
 pub struct Tbody<'a> {
+    #[tag_renderable_children(type = "renderable")]
     pub trs: Vec<Tr<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -313,19 +296,10 @@ impl<'a> TagRenderableAttrs for Tbody<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Tbody<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.trs.iter() {
-            ret.push(Renderable::Tag(m));
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "tr")]
 pub struct Tr<'a> {
+    #[tag_renderable_children(type = "renderable")]
     pub tds: Vec<Td<'a>>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -333,16 +307,6 @@ pub struct Tr<'a> {
 impl<'a> TagRenderableAttrs for Tr<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
-    }
-}
-
-impl<'a> TagRenderableChildren for Tr<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.tds.iter() {
-            ret.push(Renderable::Tag(m));
-        }
-        Ok(ret)
     }
 }
 
