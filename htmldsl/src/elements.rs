@@ -116,9 +116,10 @@ impl<'a> TagRenderableChildren for Style<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "body")]
 pub struct Body<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -129,19 +130,10 @@ impl<'a> TagRenderableAttrs for Body<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Body<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "div")]
 pub struct Div<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -152,19 +144,10 @@ impl<'a> TagRenderableAttrs for Div<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Div<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "span")]
 pub struct Span<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -175,19 +158,10 @@ impl<'a> TagRenderableAttrs for Span<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Span<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "h1")]
 pub struct H1<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -198,19 +172,10 @@ impl<'a> TagRenderableAttrs for H1<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for H1<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "h2")]
 pub struct H2<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -221,19 +186,10 @@ impl<'a> TagRenderableAttrs for H2<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for H2<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "h3")]
 pub struct H3<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -244,19 +200,10 @@ impl<'a> TagRenderableAttrs for H3<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for H3<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "p")]
 pub struct P<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -264,16 +211,6 @@ pub struct P<'a> {
 impl<'a> TagRenderableAttrs for P<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
-    }
-}
-
-impl<'a> TagRenderableChildren for P<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
     }
 }
 
@@ -349,9 +286,10 @@ impl<'a> TagRenderableChildren for Thr<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "th")]
 pub struct Th<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -359,16 +297,6 @@ pub struct Th<'a> {
 impl<'a> TagRenderableAttrs for Th<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
-    }
-}
-
-impl<'a> TagRenderableChildren for Th<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
     }
 }
 
@@ -418,9 +346,10 @@ impl<'a> TagRenderableChildren for Tr<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "td")]
 pub struct Td<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -431,19 +360,10 @@ impl<'a> TagRenderableAttrs for Td<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Td<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "code")]
 pub struct Code<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -454,19 +374,10 @@ impl<'a> TagRenderableAttrs for Code<'a> {
     }
 }
 
-impl<'a> TagRenderableChildren for Code<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
-    }
-}
-
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "pre")]
 pub struct Pre<'a> {
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -474,16 +385,6 @@ pub struct Pre<'a> {
 impl<'a> TagRenderableAttrs for Pre<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
-    }
-}
-
-impl<'a> TagRenderableChildren for Pre<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
     }
 }
 
@@ -506,10 +407,11 @@ impl<'a> TagRenderableChildren for Img<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
 #[tag_renderable_name(name = "a")]
 pub struct A<'a> {
     pub href: attributes::Href,
+    #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     pub styles: attributes::StyleAttr<'a>,
 }
@@ -517,16 +419,6 @@ pub struct A<'a> {
 impl<'a> TagRenderableAttrs for A<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![&self.href], &self.styles)
-    }
-}
-
-impl<'a> TagRenderableChildren for A<'a> {
-    fn get_children(&self) -> Result<Vec<Renderable>, String> {
-        let mut ret: Vec<Renderable> = Vec::new();
-        for m in self.children.iter() {
-            ret.push(m.into_renderable());
-        }
-        Ok(ret)
     }
 }
 

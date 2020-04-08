@@ -5,6 +5,7 @@ extern crate syn;
 #[macro_use]
 extern crate quote;
 
+mod children;
 mod generic;
 mod name;
 mod tag;
@@ -31,4 +32,11 @@ pub fn derive_tag_renderable_name(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
 
     name::impl_tag_renderable_name(&input)
+}
+
+#[proc_macro_derive(TagRenderableChildren, attributes(tag_renderable_children))]
+pub fn derive_tag_renderable_children(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as syn::DeriveInput);
+
+    children::impl_tag_renderable_children(&input)
 }
