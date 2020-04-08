@@ -66,9 +66,18 @@ pub fn impl_tag_renderable_children(ast: &syn::DeriveInput) -> TokenStream {
         }
     }
 
-    let (_gen_type, children_name) = match o_gen_type {
+    let (gen_type, children_name) = match o_gen_type {
         Some(s) => s,
         None => panic!("must provide the renderable children generation type"),
+    };
+
+    let body = match gen_type {
+        ChildrenGenType::Element => quote! {
+                Ok(self.#children_name
+                    .iter()
+                    .map(|m| m.into_renderable())
+                    .collect())
+        },
     };
 
     // Used in the quasi-quotation below as `#name`
@@ -80,10 +89,7 @@ pub fn impl_tag_renderable_children(ast: &syn::DeriveInput) -> TokenStream {
     let ret = quote! {
         impl #impl_generics htmldsl_internal::element_traits::TagRenderableChildren for #name #ty_generics #where_clause {
             fn get_children(&self) -> Result<Vec<Renderable>, String> {
-                Ok(self.#children_name
-                    .iter()
-                    .map(|m| m.into_renderable())
-                    .collect())
+                #body
             }
         }
     };
