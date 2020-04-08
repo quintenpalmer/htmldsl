@@ -8,6 +8,7 @@ extern crate quote;
 mod generic;
 mod name;
 mod tag;
+mod util;
 
 use proc_macro::TokenStream;
 

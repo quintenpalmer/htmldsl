@@ -2,6 +2,8 @@ use proc_macro::TokenStream;
 use quote;
 use syn;
 
+use super::util;
+
 pub fn impl_tag_renderable_name(ast: &syn::DeriveInput) -> TokenStream {
     let tag_renderable_name_usage = "#[tag_renderable_name(name = \"html_element_name\")]";
 
@@ -13,7 +15,7 @@ pub fn impl_tag_renderable_name(ast: &syn::DeriveInput) -> TokenStream {
                 syn::NestedMeta::Meta(syn::Meta::NameValue(ref m))
                     if m.path.get_ident().unwrap().to_string() == "name" =>
                 {
-                    let s = get_string_from_lit(&m.lit);
+                    let s = util::get_string_from_lit(&m.lit);
                     o_name = Some(s);
                 }
                 _ => panic!(format!(
@@ -56,15 +58,5 @@ fn get_renderable_name_meta_items(attr: &syn::Attribute) -> Option<Vec<syn::Nest
     match attr.parse_meta() {
         Ok(syn::Meta::List(meta)) => Some(meta.nested.into_iter().collect()),
         _ => None,
-    }
-}
-
-fn get_string_from_lit(lit: &syn::Lit) -> String {
-    if let syn::Lit::Str(ref s) = *lit {
-        s.value()
-    } else {
-        panic!(format!(
-            "expected tag_renderable_name attribute to be a string: `... = \"...\"`",
-        ));
     }
 }
