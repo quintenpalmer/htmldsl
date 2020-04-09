@@ -116,11 +116,12 @@ impl<'a> TagRenderableChildren for Style<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "body")]
 pub struct Body<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 

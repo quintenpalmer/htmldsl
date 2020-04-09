@@ -1,5 +1,6 @@
 pub mod element_traits {
     use super::attr_traits;
+    use super::style_traits;
 
     pub enum Element {
         Tag(Box<dyn GenericRenderable>),
@@ -46,6 +47,10 @@ pub mod element_traits {
 
     pub trait TagRenderableAttrs {
         fn get_attributes(&self) -> Vec<&dyn attr_traits::Attribute>;
+    }
+
+    pub trait TagRenderableStyleSetter<'a> {
+        fn add_style(self, styles: Vec<&'a dyn style_traits::Style>) -> Self;
     }
 
     pub trait TagRenderableChildren {
