@@ -20,12 +20,13 @@ mod util {
     }
 }
 
-#[derive(TagRenderable, TagRenderableName)]
+#[derive(TagRenderable, TagRenderableName, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "html")]
 pub struct Html<'a> {
     pub head: Option<Head<'a>>,
     pub body: Option<Body<'a>>,
     pub lang: attributes::Lang,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -76,10 +77,11 @@ impl<'a> TagRenderableChildren for Head<'a> {
     }
 }
 
-#[derive(TagRenderable, TagRenderableName)]
+#[derive(TagRenderable, TagRenderableName, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "meta")]
 pub struct Meta<'a> {
     pub charset: Option<attributes::Charset>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -131,11 +133,18 @@ impl<'a> TagRenderableAttrs for Body<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "div")]
 pub struct Div<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -145,11 +154,18 @@ impl<'a> TagRenderableAttrs for Div<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "span")]
 pub struct Span<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -159,11 +175,18 @@ impl<'a> TagRenderableAttrs for Span<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "h1")]
 pub struct H1<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -173,11 +196,18 @@ impl<'a> TagRenderableAttrs for H1<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "h2")]
 pub struct H2<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -187,11 +217,18 @@ impl<'a> TagRenderableAttrs for H2<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "h3")]
 pub struct H3<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -201,11 +238,18 @@ impl<'a> TagRenderableAttrs for H3<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "p")]
 pub struct P<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -215,11 +259,12 @@ impl<'a> TagRenderableAttrs for P<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "table")]
 pub struct Table<'a> {
     pub thead: Option<Thead<'a>>,
     pub tbody: Tbody<'a>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -241,11 +286,12 @@ impl<'a> TagRenderableChildren for Table<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "thead")]
 pub struct Thead<'a> {
     #[tag_renderable_children(type = "renderable")]
     pub trs: Vec<Thr<'a>>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -255,11 +301,12 @@ impl<'a> TagRenderableAttrs for Thead<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "tr")]
 pub struct Thr<'a> {
     #[tag_renderable_children(type = "renderable")]
     pub ths: Vec<Th<'a>>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -269,11 +316,12 @@ impl<'a> TagRenderableAttrs for Thr<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "th")]
 pub struct Th<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -283,11 +331,12 @@ impl<'a> TagRenderableAttrs for Th<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "tbody")]
 pub struct Tbody<'a> {
     #[tag_renderable_children(type = "renderable")]
     pub trs: Vec<Tr<'a>>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -297,11 +346,12 @@ impl<'a> TagRenderableAttrs for Tbody<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "tr")]
 pub struct Tr<'a> {
     #[tag_renderable_children(type = "renderable")]
     pub tds: Vec<Td<'a>>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -311,11 +361,12 @@ impl<'a> TagRenderableAttrs for Tr<'a> {
     }
 }
 
-#[derive(TagRenderableName, TagRenderable, TagRenderableChildren)]
+#[derive(TagRenderableName, TagRenderable, TagRenderableChildren, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "td")]
 pub struct Td<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -325,11 +376,18 @@ impl<'a> TagRenderableAttrs for Td<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "code")]
 pub struct Code<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -339,11 +397,18 @@ impl<'a> TagRenderableAttrs for Code<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "pre")]
 pub struct Pre<'a> {
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -353,10 +418,11 @@ impl<'a> TagRenderableAttrs for Pre<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "img")]
 pub struct Img<'a> {
     pub src: attributes::Src,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -372,12 +438,19 @@ impl<'a> TagRenderableChildren for Img<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableChildren)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+)]
 #[tag_renderable_name(name = "a")]
 pub struct A<'a> {
     pub href: attributes::Href,
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -387,13 +460,14 @@ impl<'a> TagRenderableAttrs for A<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "form")]
 pub struct Form<'a> {
     pub formmethod: attributes::Formmethod,
     pub action: Option<attributes::Action>,
     pub inputs: Vec<Input<'a>>,
     pub button: Button<'a>,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -417,10 +491,11 @@ impl<'a> TagRenderableChildren for Form<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "button")]
 pub struct Button<'a> {
     pub child: Element,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
@@ -436,12 +511,13 @@ impl<'a> TagRenderableChildren for Button<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable)]
+#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
 #[tag_renderable_name(name = "input")]
 pub struct Input<'a> {
     pub type_: Option<attributes::InputType>,
     pub name: attributes::Name,
     pub value: attributes::Value,
+    #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
 }
 
