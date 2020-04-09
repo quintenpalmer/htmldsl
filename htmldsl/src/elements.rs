@@ -30,6 +30,21 @@ pub struct Html<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Html<'a> {
+    pub fn style_less(
+        head: Option<Head<'a>>,
+        body: Option<Body<'a>>,
+        lang: attributes::Lang,
+    ) -> Self {
+        Html {
+            head: head,
+            body: body,
+            lang: lang,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Html<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![&self.lang], &self.styles)
@@ -85,6 +100,15 @@ pub struct Meta<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Meta<'a> {
+    pub fn style_less(charset: Option<attributes::Charset>) -> Self {
+        Meta {
+            charset: charset,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Meta<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(
@@ -127,6 +151,15 @@ pub struct Body<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Body<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Body {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Body<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -146,6 +179,15 @@ pub struct Div<'a> {
     pub children: Vec<Element>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Div<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Div {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Div<'a> {
@@ -169,6 +211,15 @@ pub struct Span<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Span<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Span {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Span<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -188,6 +239,15 @@ pub struct H1<'a> {
     pub children: Vec<Element>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> H1<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        H1 {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for H1<'a> {
@@ -211,6 +271,15 @@ pub struct H2<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> H2<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        H2 {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for H2<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -230,6 +299,15 @@ pub struct H3<'a> {
     pub children: Vec<Element>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> H3<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        H3 {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for H3<'a> {
@@ -253,6 +331,15 @@ pub struct P<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> P<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        P {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for P<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -266,6 +353,16 @@ pub struct Table<'a> {
     pub tbody: Tbody<'a>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Table<'a> {
+    pub fn style_less(thead: Option<Thead<'a>>, tbody: Tbody<'a>) -> Self {
+        Table {
+            thead: thead,
+            tbody: tbody,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Table<'a> {
@@ -295,6 +392,15 @@ pub struct Thead<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Thead<'a> {
+    pub fn style_less(trs: Vec<Thr<'a>>) -> Self {
+        Thead {
+            trs: trs,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Thead<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -308,6 +414,15 @@ pub struct Thr<'a> {
     pub ths: Vec<Th<'a>>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Thr<'a> {
+    pub fn style_less(ths: Vec<Th<'a>>) -> Self {
+        Thr {
+            ths: ths,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Thr<'a> {
@@ -325,6 +440,15 @@ pub struct Th<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Th<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Th {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Th<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -338,6 +462,15 @@ pub struct Tbody<'a> {
     pub trs: Vec<Tr<'a>>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Tbody<'a> {
+    pub fn style_less(trs: Vec<Tr<'a>>) -> Self {
+        Tbody {
+            trs: trs,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Tbody<'a> {
@@ -355,6 +488,15 @@ pub struct Tr<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Tr<'a> {
+    pub fn style_less(tds: Vec<Td<'a>>) -> Self {
+        Tr {
+            tds: tds,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Tr<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -368,6 +510,15 @@ pub struct Td<'a> {
     pub children: Vec<Element>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Td<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Td {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Td<'a> {
@@ -391,6 +542,15 @@ pub struct Code<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Code<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Code {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Code<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -412,6 +572,15 @@ pub struct Pre<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Pre<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        Pre {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Pre<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -424,6 +593,15 @@ pub struct Img<'a> {
     pub src: attributes::Src,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Img<'a> {
+    pub fn style_less(src: attributes::Src) -> Self {
+        Img {
+            src: src,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Img<'a> {
@@ -454,6 +632,16 @@ pub struct A<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> A<'a> {
+    pub fn style_less(href: attributes::Href, children: Vec<Element>) -> Self {
+        A {
+            href: href,
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for A<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![&self.href], &self.styles)
@@ -469,6 +657,23 @@ pub struct Form<'a> {
     pub button: Button<'a>,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Form<'a> {
+    pub fn style_less(
+        formmethod: attributes::Formmethod,
+        action: Option<attributes::Action>,
+        inputs: Vec<Input<'a>>,
+        button: Button<'a>,
+    ) -> Self {
+        Form {
+            formmethod: formmethod,
+            action: action,
+            inputs: inputs,
+            button: button,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Form<'a> {
@@ -499,6 +704,15 @@ pub struct Button<'a> {
     pub styles: attributes::StyleAttr<'a>,
 }
 
+impl<'a> Button<'a> {
+    pub fn style_less(child: Element) -> Self {
+        Button {
+            child: child,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Button<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         util::full_attrs(vec![], &self.styles)
@@ -519,6 +733,21 @@ pub struct Input<'a> {
     pub value: attributes::Value,
     #[tag_renderable_style]
     pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> Input<'a> {
+    pub fn style_less(
+        type_: Option<attributes::InputType>,
+        name: attributes::Name,
+        value: attributes::Value,
+    ) -> Self {
+        Input {
+            type_: type_,
+            name: name,
+            value: value,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Input<'a> {
