@@ -6,6 +6,12 @@ pub struct StyleAttr<'a> {
     pub values: Vec<&'a dyn style_traits::Style>,
 }
 
+impl<'a> StyleAttr<'a> {
+    pub fn empty() -> Self {
+        StyleAttr { values: Vec::new() }
+    }
+}
+
 impl<'a> Attribute for StyleAttr<'a> {
     fn attr_key(&self) -> String {
         "style".into()
