@@ -364,6 +364,41 @@ impl<'a> Table<'a> {
             styles: attributes::StyleAttr::empty(),
         }
     }
+
+    pub fn style_less_from_vecs(
+        thead: Option<Vec<Vec<Element>>>,
+        tbody: Vec<Vec<Element>>,
+    ) -> Self {
+        Table {
+            thead: match thead {
+                Some(h) => Some(Thead::style_less(
+                    h.into_iter()
+                        .map(|row| {
+                            Thr::style_less(
+                                row.into_iter()
+                                    .map(|data| Th::style_less(vec![data]))
+                                    .collect(),
+                            )
+                        })
+                        .collect(),
+                )),
+                None => None,
+            },
+            tbody: Tbody::style_less(
+                tbody
+                    .into_iter()
+                    .map(|row| {
+                        Tr::style_less(
+                            row.into_iter()
+                                .map(|data| Td::style_less(vec![data]))
+                                .collect(),
+                        )
+                    })
+                    .collect(),
+            ),
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
 }
 
 impl<'a> TagRenderableAttrs for Table<'a> {
