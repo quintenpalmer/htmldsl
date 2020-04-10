@@ -4,9 +4,7 @@ pub mod style_sheet;
 pub mod styles;
 pub mod units;
 
-pub use htmldsl_internal::element_traits::tag;
-pub use htmldsl_internal::element_traits::text;
-pub use htmldsl_internal::element_traits::Element;
+pub use htmldsl_internal::element_traits::*;
 
 #[macro_use]
 extern crate htmldsl_internal_derive;
