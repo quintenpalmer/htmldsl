@@ -5,7 +5,7 @@ pub struct StyleSheet<'a> {
 }
 
 pub struct StyleAssignment<'a> {
-    pub name: String,
+    pub names: Vec<String>,
     pub styles: Vec<&'a dyn style_traits::Style>,
 }
 
@@ -21,7 +21,7 @@ pub fn style_sheet_string(style_sheet: &StyleSheet) -> String {
 fn single_style_string(style_assignment: &StyleAssignment) -> String {
     format!(
         "{} {{ {} }}",
-        style_assignment.name,
+        style_assignment.names.join(", "),
         style_traits::render_styles(&style_assignment.styles)
     )
 }
