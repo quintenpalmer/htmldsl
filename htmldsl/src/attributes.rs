@@ -10,6 +10,10 @@ impl<'a> StyleAttr<'a> {
     pub fn empty() -> Self {
         StyleAttr { values: Vec::new() }
     }
+
+    pub fn new(styles: Vec<&'a dyn style_traits::Style>) -> Self {
+        StyleAttr { values: styles }
+    }
 }
 
 impl<'a> Attribute for StyleAttr<'a> {
