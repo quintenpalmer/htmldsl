@@ -1,5 +1,6 @@
 use super::attributes;
 use super::style_sheet;
+use super::units;
 use htmldsl_internal::attr_traits::Attribute;
 use htmldsl_internal::element_traits::{
     Element, Renderable, TagRenderableAttrs, TagRenderableChildren,
@@ -599,6 +600,15 @@ impl<'a> Img<'a> {
     pub fn style_less(src: attributes::Src) -> Self {
         Img {
             src: src,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+
+    pub fn style_less_with_src(src: String) -> Self {
+        Img {
+            src: attributes::Src {
+                value: units::SourceValue::new(src),
+            },
             styles: attributes::StyleAttr::empty(),
         }
     }
