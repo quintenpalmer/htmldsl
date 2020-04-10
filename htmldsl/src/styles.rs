@@ -3,6 +3,7 @@ use htmldsl_internal::style_traits::Style;
 
 pub enum Display {
     Inline,
+    Block,
     Grid,
     None,
 }
@@ -15,6 +16,7 @@ impl Style for Display {
     fn style_value(&self) -> String {
         match self {
             Display::Inline => "inline".into(),
+            Display::Block => "block".into(),
             Display::Grid => "grid".into(),
             Display::None => "none".into(),
         }
