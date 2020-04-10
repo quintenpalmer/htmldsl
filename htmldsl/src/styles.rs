@@ -114,6 +114,48 @@ impl Style for Border {
     }
 }
 
+pub struct BorderCollapse {
+    pub value: units::BorderCollapseStyle,
+}
+
+impl Style for BorderCollapse {
+    fn style_key(&self) -> String {
+        "border-collapse".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.unit_str()
+    }
+}
+
+pub struct BorderSpacing {
+    pub value: units::Number,
+}
+
+impl Style for BorderSpacing {
+    fn style_key(&self) -> String {
+        "border-spacing".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.style_value_helper()
+    }
+}
+
+pub struct VerticalAlign {
+    pub value: units::VerticalAlignValue,
+}
+
+impl Style for VerticalAlign {
+    fn style_key(&self) -> String {
+        "vertical-align".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.value_string()
+    }
+}
+
 pub struct MaxWidth {
     pub value: u32,
 }

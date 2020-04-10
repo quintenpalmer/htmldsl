@@ -136,6 +136,30 @@ impl BorderStyle {
     }
 }
 
+pub enum BorderCollapseStyle {
+    Collapse,
+}
+
+impl BorderCollapseStyle {
+    pub fn unit_str(&self) -> String {
+        match self {
+            BorderCollapseStyle::Collapse => "collapse".into(),
+        }
+    }
+}
+
+pub enum VerticalAlignValue {
+    Baseline,
+}
+
+impl VerticalAlignValue {
+    pub fn value_string(&self) -> String {
+        match self {
+            VerticalAlignValue::Baseline => "baseline".into(),
+        }
+    }
+}
+
 pub enum Number {
     Length(u32, Length),
     Percentage(u32),
