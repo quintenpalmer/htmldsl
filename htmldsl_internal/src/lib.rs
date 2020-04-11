@@ -7,11 +7,11 @@ pub mod element_traits {
         Text(String),
     }
 
-    pub fn tag<'a>(r: Box<dyn GenericRenderable>) -> Element {
+    pub fn tag(r: Box<dyn GenericRenderable>) -> Element {
         Element::Tag(r)
     }
 
-    pub fn text<'a>(s: String) -> Element {
+    pub fn text(s: String) -> Element {
         Element::Text(s)
     }
 
