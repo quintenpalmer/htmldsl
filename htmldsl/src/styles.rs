@@ -255,3 +255,56 @@ impl Style for Visibility {
         self.value.style_value_helper()
     }
 }
+
+pub enum Position {
+    Static,
+    Relative,
+    Absolute,
+    Fixed,
+    Sticky,
+}
+
+impl Style for Position {
+    fn style_key(&self) -> String {
+        "position".into()
+    }
+
+    fn style_value(&self) -> String {
+        match self {
+            Position::Static => "static",
+            Position::Relative => "relative",
+            Position::Absolute => "absolute",
+            Position::Fixed => "fixed",
+            Position::Sticky => "sticky",
+        }
+        .into()
+    }
+}
+
+pub struct Top {
+    pub value: units::Number,
+}
+
+impl Style for Top {
+    fn style_key(&self) -> String {
+        "top".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.style_value_helper()
+    }
+}
+
+pub struct Left {
+    pub value: units::Number,
+}
+
+impl Style for Left {
+    fn style_key(&self) -> String {
+        "left".into()
+    }
+
+    fn style_value(&self) -> String {
+        self.value.style_value_helper()
+    }
+}
