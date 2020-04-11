@@ -8,6 +8,7 @@ extern crate quote;
 mod children;
 mod element_styles;
 mod generic;
+mod into_element;
 mod name;
 mod tag;
 mod util;
@@ -47,4 +48,11 @@ pub fn derive_tag_renderable_style_setter(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
 
     element_styles::impl_tag_renderable_style_setter(&input)
+}
+
+#[proc_macro_derive(TagRenderableIntoElement)]
+pub fn derive_tag_renderable_into_element(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as syn::DeriveInput);
+
+    into_element::impl_tag_renderable_into_element(&input)
 }

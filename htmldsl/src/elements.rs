@@ -173,6 +173,7 @@ impl<'a> TagRenderableAttrs for Body<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "div")]
 pub struct Div<'a> {
@@ -203,6 +204,7 @@ impl<'a> TagRenderableAttrs for Div<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "span")]
 pub struct Span<'a> {
@@ -233,6 +235,7 @@ impl<'a> TagRenderableAttrs for Span<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "h1")]
 pub struct H1<'a> {
@@ -263,6 +266,7 @@ impl<'a> TagRenderableAttrs for H1<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "h2")]
 pub struct H2<'a> {
@@ -293,6 +297,7 @@ impl<'a> TagRenderableAttrs for H2<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "h3")]
 pub struct H3<'a> {
@@ -323,6 +328,7 @@ impl<'a> TagRenderableAttrs for H3<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "p")]
 pub struct P<'a> {
@@ -347,7 +353,13 @@ impl<'a> TagRenderableAttrs for P<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableStyleSetter,
+    TagRenderableIntoElement,
+)]
 #[tag_renderable_name(name = "table")]
 pub struct Table<'a> {
     pub thead: Option<Thead<'a>>,
@@ -569,6 +581,7 @@ impl<'a> TagRenderableAttrs for Td<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "code")]
 pub struct Code<'a> {
@@ -599,6 +612,7 @@ impl<'a> TagRenderableAttrs for Code<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "pre")]
 pub struct Pre<'a> {
@@ -623,7 +637,13 @@ impl<'a> TagRenderableAttrs for Pre<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableStyleSetter,
+    TagRenderableIntoElement,
+)]
 #[tag_renderable_name(name = "img")]
 pub struct Img<'a> {
     pub src: attributes::Src,
@@ -667,6 +687,7 @@ impl<'a> TagRenderableChildren for Img<'a> {
     TagRenderable,
     TagRenderableChildren,
     TagRenderableStyleSetter,
+    TagRenderableIntoElement,
 )]
 #[tag_renderable_name(name = "a")]
 pub struct A<'a> {
@@ -693,7 +714,13 @@ impl<'a> TagRenderableAttrs for A<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableStyleSetter,
+    TagRenderableIntoElement,
+)]
 #[tag_renderable_name(name = "form")]
 pub struct Form<'a> {
     pub formmethod: attributes::Formmethod,
@@ -741,7 +768,13 @@ impl<'a> TagRenderableChildren for Form<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableStyleSetter,
+    TagRenderableIntoElement,
+)]
 #[tag_renderable_name(name = "button")]
 pub struct Button<'a> {
     pub child: Element,
@@ -770,7 +803,13 @@ impl<'a> TagRenderableChildren for Button<'a> {
     }
 }
 
-#[derive(TagRenderableName, GenericRenderable, TagRenderable, TagRenderableStyleSetter)]
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableStyleSetter,
+    TagRenderableIntoElement,
+)]
 #[tag_renderable_name(name = "input")]
 pub struct Input<'a> {
     pub type_: Option<attributes::InputType>,

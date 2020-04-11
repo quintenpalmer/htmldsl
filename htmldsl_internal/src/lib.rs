@@ -3,7 +3,7 @@ pub mod element_traits {
     use super::style_traits;
 
     pub enum Element {
-        Tag(Box<dyn GenericRenderable>),
+        Tag(Box<dyn GenericRenderable + 'static>),
         Text(String),
     }
 
@@ -55,6 +55,10 @@ pub mod element_traits {
 
     pub trait TagRenderableChildren {
         fn get_children(&self) -> Result<Vec<Renderable>, String>;
+    }
+
+    pub trait TagRenderableIntoElement {
+        fn into_element(self) -> Element;
     }
 
     pub enum Renderable<'a> {
