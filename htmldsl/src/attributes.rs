@@ -33,7 +33,7 @@ pub struct Lang {
 
 impl Attribute for Lang {
     fn attr_key(&self) -> String {
-        "lanq".into()
+        "lang".into()
     }
 
     fn attr_value(&self) -> String {
