@@ -4,7 +4,7 @@
 
 This is a library to help with programatically generating HTML.
 
-## Anatomy of the project:
+## Anatomy of the Project:
 
 ```
 htmldsl/
