@@ -74,6 +74,15 @@ pub struct Head<'a> {
     pub styles: Vec<Style<'a>>,
 }
 
+impl<'a> Head<'a> {
+    pub fn new(metas: Vec<Meta<'a>>, styles: Vec<Style<'a>>) -> Self {
+        Head {
+            metas: metas,
+            styles: styles,
+        }
+    }
+}
+
 impl<'a> TagRenderableAttrs for Head<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
         Vec::new()
