@@ -6,6 +6,7 @@ This is a library to help with programatically generating HTML.
 
 ## Anatomy of the project:
 
+```
 htmldsl/
     lib.rs - library top level file, exports all modules in crate and all contents of the internal crate
     elements.rs - Contains common HTML elements (like `<h1>` and `<p>`)
@@ -17,6 +18,7 @@ htmldsl_internal/
     lib.rs - Contains the traits that the previous crates builds on
 htmlds_internal_derive/
     *.rs - Derive macros for various traits defined in htmldsl_internal
+```
 
 ## Example usage
 
