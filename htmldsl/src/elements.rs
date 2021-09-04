@@ -339,6 +339,37 @@ impl<'a> TagRenderableAttrs for H3<'a> {
     TagRenderableStyleSetter,
     TagRenderableIntoElement,
 )]
+#[tag_renderable_name(name = "h4")]
+pub struct H4<'a> {
+    #[tag_renderable_children(type = "element")]
+    pub children: Vec<Element>,
+    #[tag_renderable_style]
+    pub styles: attributes::StyleAttr<'a>,
+}
+
+impl<'a> H4<'a> {
+    pub fn style_less(children: Vec<Element>) -> Self {
+        H4 {
+            children: children,
+            styles: attributes::StyleAttr::empty(),
+        }
+    }
+}
+
+impl<'a> TagRenderableAttrs for H4<'a> {
+    fn get_attributes(&self) -> Vec<&dyn Attribute> {
+        util::full_attrs(vec![], &self.styles)
+    }
+}
+
+#[derive(
+    TagRenderableName,
+    GenericRenderable,
+    TagRenderable,
+    TagRenderableChildren,
+    TagRenderableStyleSetter,
+    TagRenderableIntoElement,
+)]
 #[tag_renderable_name(name = "p")]
 pub struct P<'a> {
     #[tag_renderable_children(type = "element")]
