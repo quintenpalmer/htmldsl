@@ -175,7 +175,7 @@ impl Style for MaxWidth {
 }
 
 pub struct BackgroundColor {
-    pub color_value: String,
+    pub color_value: &'static str,
 }
 
 impl Style for BackgroundColor {
@@ -184,12 +184,12 @@ impl Style for BackgroundColor {
     }
 
     fn style_value(&self) -> String {
-        self.color_value.clone()
+        self.color_value.into()
     }
 }
 
 pub struct Color {
-    pub color_value: String,
+    pub color_value: &'static str,
 }
 
 impl Style for Color {
@@ -198,12 +198,12 @@ impl Style for Color {
     }
 
     fn style_value(&self) -> String {
-        self.color_value.clone()
+        self.color_value.to_string()
     }
 }
 
 pub struct FontFamily {
-    pub name: String,
+    pub name: &'static str,
 }
 
 impl Style for FontFamily {
@@ -212,7 +212,7 @@ impl Style for FontFamily {
     }
 
     fn style_value(&self) -> String {
-        self.name.clone()
+        self.name.to_string()
     }
 }
 
