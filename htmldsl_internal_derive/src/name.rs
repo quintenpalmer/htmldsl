@@ -18,20 +18,20 @@ pub fn impl_tag_renderable_name(ast: &syn::DeriveInput) -> TokenStream {
                     let s = util::get_string_from_lit(&m.lit);
                     o_name = Some(s);
                 }
-                _ => panic!(format!(
+                _ => panic!(
                     "incorrect usage of custom attribute, use: {}",
                     tag_renderable_name_usage
-                )),
+                ),
             }
         }
     }
 
     let renderable_name = match o_name {
         Some(s) => s,
-        None => panic!(format!(
+        None => panic!(
             "must provide the renderable name: {}",
             tag_renderable_name_usage
-        )),
+        ),
     };
 
     // Used in the quasi-quotation below as `#name`
