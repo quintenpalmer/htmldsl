@@ -186,6 +186,7 @@ impl<'a> TagRenderableAttrs for Body<'a> {
 )]
 #[tag_renderable_name(name = "div")]
 pub struct Div<'a> {
+    pub id: Option<attributes::Id>,
     #[tag_renderable_children(type = "element")]
     pub children: Vec<Element>,
     #[tag_renderable_style]
@@ -195,6 +196,7 @@ pub struct Div<'a> {
 impl<'a> Div<'a> {
     pub fn style_less(children: Vec<Element>) -> Self {
         Div {
+            id: None,
             children: children,
             styles: attributes::StyleAttr::empty(),
         }
@@ -203,7 +205,10 @@ impl<'a> Div<'a> {
 
 impl<'a> TagRenderableAttrs for Div<'a> {
     fn get_attributes(&self) -> Vec<&dyn Attribute> {
-        util::full_attrs(vec![], &self.styles)
+        util::full_attrs(
+            self.id.as_ref().map_or(Vec::new(), |v| vec![v]),
+            &self.styles,
+        )
     }
 }
 
