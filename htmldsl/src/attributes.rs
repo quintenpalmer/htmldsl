@@ -26,6 +26,20 @@ impl<'a> Attribute for StyleAttr<'a> {
     }
 }
 
+pub struct Id {
+    pub name: &'static str,
+}
+
+impl Attribute for Id {
+    fn attr_key(&self) -> String {
+        "id".into()
+    }
+
+    fn attr_value(&self) -> String {
+        self.name.to_string()
+    }
+}
+
 pub struct Lang {
     pub tag: units::LanguageTag,
     pub sub_tag: units::LanguageSubTag,
