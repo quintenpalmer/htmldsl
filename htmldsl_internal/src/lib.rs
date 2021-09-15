@@ -11,8 +11,8 @@ pub mod element_traits {
         Element::Tag(r)
     }
 
-    pub fn text(s: String) -> Element {
-        Element::Text(s)
+    pub fn text<S: Into<String>>(s: S) -> Element {
+        Element::Text(s.into())
     }
 
     impl<'a> Element {
